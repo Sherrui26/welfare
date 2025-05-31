@@ -6,7 +6,11 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<h1 class="text-2xl font-bold mb-4 text-gray-700 dark-mode-text tracking-wide">Welcome, Sharul Aiman.</h1>
+<?php if (isset($pageTitle)): ?>
+<h1 class="text-2xl font-bold mb-4 text-gray-700 dark-mode-text tracking-wide"><?= esc($pageTitle) ?></h1>
+<?php else: ?>
+<h1 class="text-2xl font-bold mb-4 text-gray-700 dark-mode-text tracking-wide">Welcome, <?= esc($username) ?>.</h1>
+<?php endif; ?>
 
 <!-- Overview Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
@@ -15,7 +19,7 @@
         <div class="card-content" onclick="toggleDetails('details1')">
             <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400"></i>
             <h2 class="text-xl font-bold mb-4">Available Rooms</h2>
-            <p class="text-2xl font-bold text-blue-400">83</p>
+            <p class="text-2xl font-bold text-blue-400"><?= esc($availableRooms) ?></p>
         </div>
         <div id="details1" class="details">
             <div class="p-3 text-xs">
@@ -52,7 +56,7 @@
         <div class="card-content" onclick="toggleDetails('details3')">
             <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400"></i>
             <h2 class="text-xl font-bold mb-4">Occupied Rooms</h2>
-            <p class="text-2xl font-bold text-yellow-500">51</p>
+            <p class="text-2xl font-bold text-yellow-500"><?= esc($occupiedRooms) ?></p>
         </div>
         <div id="details3" class="details">
             <div class="p-3 text-xs">
@@ -90,7 +94,7 @@
         <div class="card-content" onclick="toggleDetails('details2')">
             <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400"></i>
             <h2 class="text-xl font-bold mb-4">Available Bedspaces</h2>
-            <p class="text-2xl font-bold text-green-500">32</p>
+            <p class="text-2xl font-bold text-green-500"><?= esc($availableBedspaces['total']) > 0 ? count($availableBedspaces['byType']) : '0' ?></p>
         </div>
         <div id="details2" class="details">
             <div class="p-3 text-xs">
@@ -178,7 +182,7 @@
         <div class="card-content" onclick="toggleDetails('details4')">
             <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400"></i>
             <h2 class="text-xl font-bold mb-4">Under Maintenance</h2>
-            <p class="text-2xl font-bold text-red-500">-</p>
+            <p class="text-2xl font-bold text-red-500"><?= $roomsUnderMaintenance > 0 ? esc($roomsUnderMaintenance) : '-' ?></p>
         </div>
         <div id="details4" class="details">
             <div class="p-3 text-xs">
@@ -189,13 +193,13 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div class="bg-gray-50 p-1.5 rounded">
                         <div class="text-gray-600 mb-0.5">Last Maintenance:</div>
-                        <div class="font-medium">Room 202</div>
-                        <div class="text-gray-500 text-xs">3 days ago</div>
+                        <div class="font-medium">Room <?= esc($maintenanceSchedule['lastMaintenance']['room']) ?></div>
+                        <div class="text-gray-500 text-xs"><?= esc($maintenanceSchedule['lastMaintenance']['daysAgo']) ?> days ago</div>
                     </div>
                     <div class="bg-gray-50 p-1.5 rounded">
                         <div class="text-gray-600 mb-0.5">Next Scheduled:</div>
-                        <div class="font-medium">Room 105</div>
-                        <div class="text-gray-500 text-xs">in 5 days</div>
+                        <div class="font-medium">Room <?= esc($maintenanceSchedule['nextScheduled']['room']) ?></div>
+                        <div class="text-gray-500 text-xs">in <?= esc($maintenanceSchedule['nextScheduled']['daysAhead']) ?> days</div>
                     </div>
                 </div>
                 <a href="<?= base_url('maintenance') ?>" class="text-red-500 hover:text-red-700 text-xs font-medium flex items-center justify-end mt-2">
@@ -211,32 +215,20 @@
         <div class="card-content" onclick="toggleDetails('details5')">
             <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400"></i>
             <h2 class="text-xl font-bold mb-4">Rooms Blocked</h2>
-            <p class="text-2xl font-bold text-red-500">3</p>
+            <p class="text-2xl font-bold text-red-500"><?= esc($roomsBlocked) ?></p>
         </div>
         <div id="details5" class="details">
             <div class="p-3 text-xs">
                 <div class="space-y-1.5">
+                    <?php foreach ($blockedDetails as $room): ?>
                     <div class="bg-red-50 p-1.5 rounded flex justify-between items-center">
                         <div class="flex items-center">
                             <i class="fas fa-ban text-red-500 mr-1.5"></i>
-                            <span class="font-medium">Room 103</span>
+                            <span class="font-medium">Room <?= esc($room['room']) ?></span>
                         </div>
-                        <span class="text-red-700">Plumbing issues</span>
+                        <span class="text-red-700"><?= esc($room['reason']) ?></span>
                     </div>
-                    <div class="bg-red-50 p-1.5 rounded flex justify-between items-center">
-                        <div class="flex items-center">
-                            <i class="fas fa-ban text-red-500 mr-1.5"></i>
-                            <span class="font-medium">Room 215</span>
-                        </div>
-                        <span class="text-red-700">Electrical repairs</span>
-                    </div>
-                    <div class="bg-red-50 p-1.5 rounded flex justify-between items-center">
-                        <div class="flex items-center">
-                            <i class="fas fa-ban text-red-500 mr-1.5"></i>
-                            <span class="font-medium">Room 307</span>
-                        </div>
-                        <span class="text-red-700">Renovation</span>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
                 <a href="<?= base_url('manage-room') ?>" class="text-red-500 hover:text-red-700 text-xs font-medium flex items-center justify-end mt-2">
                     <span>Manage Blocked Rooms</span>
@@ -435,84 +427,22 @@
         <div class="card basic-card bg-white shadow-md rounded-lg p-6 h-full flex-grow">
             <h2 class="text-xl font-bold mb-4 flex items-center justify-between">
                 <span>Recent Activity</span>
-                <span class="activity-badge text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Last Activity: Today, 2:37 PM</span>
+                <span class="activity-badge text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Last Activity: <?= esc($lastActivityTime) ?></span>
             </h2>
             <div class="overflow-y-auto" style="height: 300px;">
                 <!-- Timeline container with styled connection line -->
                 <div class="timeline-container relative pl-6 before:content-[''] before:absolute before:left-[20px] before:top-4 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-green-300 before:via-purple-300 before:to-blue-300 before:opacity-70">
                     <!-- Activity Items -->
                     <div class="space-y-5 pt-1 pb-2">
-                        <!-- Activity 1 -->
-                        <div class="timeline-item relative rounded-lg p-3 bg-gradient-to-r from-white to-gray-50 border border-gray-100">
-                            <!-- Colored dot -->
-                            <div class="absolute -left-6 top-4 w-3 h-3 bg-green-500 rounded-full shadow-sm z-10"></div>
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-start">
-                                    <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3 shadow-sm border border-green-200">
-                                        <i class="fas fa-sign-in-alt text-green-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-800">Check-in: Room 101</p>
-                                        <p class="text-xs text-gray-500 mt-0.5">John Smith has checked in</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">11:32 AM</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Activity 2 -->
-                        <div class="timeline-item relative rounded-lg p-3 bg-gradient-to-r from-white to-gray-50 border border-gray-100">
-                            <!-- Colored dot -->
-                            <div class="absolute -left-6 top-4 w-3 h-3 bg-red-500 rounded-full shadow-sm z-10"></div>
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-start">
-                                    <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center mr-3 shadow-sm border border-red-200">
-                                        <i class="fas fa-sign-out-alt text-red-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-800">Check-out: Room 102</p>
-                                        <p class="text-xs text-gray-500 mt-0.5">Jane Cooper has checked out</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">10:15 AM</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Activity 3 -->
-                        <div class="timeline-item relative rounded-lg p-3 bg-gradient-to-r from-white to-gray-50 border border-gray-100">
-                            <!-- Colored dot -->
-                            <div class="absolute -left-6 top-4 w-3 h-3 bg-yellow-500 rounded-full shadow-sm z-10"></div>
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-start">
-                                    <div class="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3 shadow-sm border border-yellow-200">
-                                        <i class="fas fa-tools text-yellow-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-800">Maintenance: Room 103</p>
-                                        <p class="text-xs text-gray-500 mt-0.5">Plumbing issue reported</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">9:45 AM</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Activity 4 -->
-                        <div class="timeline-item relative rounded-lg p-3 bg-gradient-to-r from-white to-gray-50 border border-gray-100">
-                            <!-- Colored dot -->
-                            <div class="absolute -left-6 top-4 w-3 h-3 bg-blue-500 rounded-full shadow-sm z-10"></div>
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-start">
-                                    <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 shadow-sm border border-blue-200">
-                                        <i class="fas fa-money-bill-wave text-blue-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-800">Payment Received: Room 201</p>
-                                        <p class="text-xs text-gray-500 mt-0.5">Monthly rent payment processed</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">8:20 AM</span>
-                            </div>
-                        </div>
+                        <?php foreach ($recentActivities as $activity): ?>
+                            <?= view('partials/activity_item', [
+                                'color' => $activity['color'],
+                                'icon' => $activity['icon'],
+                                'title' => $activity['title'],
+                                'description' => $activity['description'],
+                                'time' => $activity['time']
+                            ]) ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
