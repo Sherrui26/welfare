@@ -1,0 +1,110 @@
+/* Simple row highlight CSS */
+
+/* ---------------- Button-Specific Row Hover -------------------- */
+
+/* We're only showing highlights when hovering over buttons, not the whole row */
+
+/* ---------------- Activity Log Modal Specific -------------------- */
+
+/* Target hover effect on row when hovering over activity buttons */
+#activityLogModal .bg-white.px-4.py-3.flex.items-center:has(.view-activity-btn:hover) {
+    background-color: rgba(124, 58, 237, 0.05) !important;
+    position: relative;
+}
+
+/* Target purple bar when hovering over activity buttons */
+#activityLogModal .bg-white.px-4.py-3.flex.items-center:has(.view-activity-btn:hover)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #7c3aed;
+    z-index: 10;
+}
+
+/* ---------------- Records Modal Specific -------------------- */
+
+/* Target hover effect on row when hovering over info button */
+#recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-view-btn:hover),
+#recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-toggle-btn:hover) {
+    background-color: rgba(124, 58, 237, 0.05) !important;
+    position: relative;
+}
+
+/* Target purple bar when hovering over info button */
+#recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-view-btn:hover)::before,
+#recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-toggle-btn:hover)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #7c3aed;
+    z-index: 10;
+}
+
+/* ---------------- Dark Mode Styles -------------------- */
+
+/* Dark mode button hover styles */
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-view-btn:hover),
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-toggle-btn:hover) {
+    background-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-view-btn:hover)::before,
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center:has(.records-toggle-btn:hover)::before {
+    background-color: #8b5cf6;
+}
+
+/* Activity log modal buttons - for consistency */
+.dark-mode #activityLogModal .bg-white.px-4.py-3.flex.items-center:has(.view-activity-btn:hover) {
+    background-color: rgba(124, 58, 237, 0.1) !important;
+    position: relative;
+}
+
+.dark-mode #activityLogModal .bg-white.px-4.py-3.flex.items-center:has(.view-activity-btn:hover)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #8b5cf6;
+    z-index: 10;
+}
+
+/* Fix for records modal header in dark mode */
+.dark-mode #recordsModal .border-b.p-4.bg-gray-50 {
+    background-color: #111827 !important;
+}
+
+/* Fix for table headers in dark mode */
+.dark-mode #recordsModal .bg-gray-50.px-4.py-3.flex.items-center.border-b {
+    background-color: #354155 !important;
+}
+
+/* Fix for pagination footer in dark mode */
+.dark-mode #recordsModal .border-t.border-gray-200.bg-gray-50.p-4.mt-auto.pagination-footer {
+    background-color: #1e293b !important;
+}
+
+/* Fix for table rows in dark mode */
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center.border-b.border-gray-200:not(:has(.records-view-btn:hover)):not(:has(.records-toggle-btn:hover)) {
+    background-color: #1e293b !important;
+    border-color: #374151 !important;
+}
+
+/* Enhance hover effect visibility in dark mode */
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center.border-b.border-gray-200:has(.records-view-btn:hover),
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center.border-b.border-gray-200:has(.records-toggle-btn:hover) {
+    background-color: rgba(124, 58, 237, 0.15) !important;
+    border-color: #374151 !important;
+}
+
+/* Last row which doesn't have border-b class */
+.dark-mode #recordsModal .bg-white.px-4.py-3.flex.items-center:not(.border-b) {
+    background-color: #1e293b !important;
+}

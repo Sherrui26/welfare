@@ -1,0 +1,656 @@
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Adding vendor prefix for Safari support */
+}
+
+/* Modal Transition Styles - Matching manage-room.html */
+#tenantModal, #residentOverlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+#tenantModal.active, #residentOverlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal content transitions */
+#tenantModal .bg-white, 
+#residentOverlay .bg-white {
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    will-change: transform, opacity;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+#tenantModal.active .bg-white, 
+#residentOverlay.active .bg-white {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Override box-shadow for pagination buttons inside resident overlay */
+#residentOverlay #residentPaginationButtons button.bg-white {
+    box-shadow: none !important;
+}
+
+#tenantModal.hidden,
+#residentOverlay.hidden,
+#tenantModal:not(.active).hidden,
+#residentOverlay:not(.active).hidden {
+    display: none !important;
+}
+
+#tenantModal:not(.hidden),
+#residentOverlay:not(.hidden) {
+    display: flex !important;
+}
+
+/* Modal Header Style */
+.modal-header-with-back {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-header-with-back h3 {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #374151;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.modal-header-with-back button:last-child {
+    padding: 0.375rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.modal-header-with-back button:last-child:hover {
+    background-color: #f3f4f6;
+}
+
+.dark-mode .modal-header-with-back button:last-child:hover {
+    background-color: #374151;
+}
+
+.dark-mode #tenantModal .bg-white,
+.dark-mode #residentOverlay .bg-white {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.dark-mode .border-b.p-4.bg-gray-50 {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+.dark-mode .border-t.border-gray-200.bg-gray-50 {
+    background-color: #374151 !important;
+    border-color: #374151 !important;
+}
+
+.dropdown-menu {
+    display: none;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.staff-section {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+.staff-section.open {
+    max-height: 500px;
+}
+.tenant-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out;
+}
+.tenant-card {
+    padding: 1rem; /* Adjusts padding */
+    min-height: 200px; /* Limits height */
+    max-height: 300px; /* Prevents overly tall cards */
+}
+
+/* Persistent backdrop styling */
+.persistent-modal-backdrop {
+    will-change: opacity;
+}
+
+/* Overlay header and footer styling */
+.overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.overlay-body {
+    padding: 1.5rem;
+    max-height: calc(90vh - 9rem);
+    overflow-y: auto;
+}
+
+.overlay-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.overlay-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Dark mode adjustments */
+.dark-mode #tenantModal .overlay-content,
+.dark-mode #residentOverlay .overlay-content {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.dark-mode .overlay-header,
+.dark-mode .overlay-footer {
+    background-color: #111827;
+    border-color: #374151;
+}
+
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+/* Tenant Card Styles */
+.tenant-card {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left-width: 4px;
+}
+
+.tenant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.tenant-card .company-logo {
+    transition: all 0.2s ease;
+}
+
+.tenant-card:hover .company-logo {
+    transform: scale(1.05);
+}
+
+/* Badge status styles */
+.status-badge {
+    transition: all 0.2s ease;
+}
+
+.tenant-card:hover .status-badge {
+    transform: scale(1.05);
+}
+
+/* Arrow animation */
+.tenant-card .card-arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.tenant-card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Expanded card container */
+#expandedCardContainer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out, margin-bottom 0.45s cubic-bezier(0.4, 0, 0.2, 1), padding 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    margin-bottom: 0;
+    background-color: white;
+    padding: 0 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.dark-mode #expandedCardContainer {
+    background-color: #1F2937;
+    border: 1px solid #374151;
+}
+
+#expandedCardContainer.active {
+    max-height: 2000px;
+    opacity: 1;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+/* Expanded card content animation */
+.expanded-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.expanded-content.show-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Search animation */
+.search-highlight {
+    animation: pulse 1.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { background-color: rgba(139, 92, 246, 0.1); }
+    50% { background-color: rgba(139, 92, 246, 0.2); }
+    100% { background-color: rgba(139, 92, 246, 0); }
+}
+
+/* Resident card styles */
+.resident-card {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.resident-card:hover {
+    background-color: #f9fafb;
+    border-left-color: #8b5cf6;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(139, 92, 246, 0.3);
+    border-radius: 50%;
+    border-top-color: #8b5cf6;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #d1d5db;
+}
+
+/* Dark mode styles */
+.dark-mode .tenant-card {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.dark-mode .tenant-card:hover {
+    background-color: #374151;
+}
+
+.dark-mode .resident-card:hover {
+    background-color: #374151;
+}
+
+.dark-mode .expanded-card {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.dark-mode .detail-panel {
+    background-color: #374151;
+    border-color: #4b5563;
+}
+
+.dark-mode table {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.dark-mode table thead {
+    background-color: #374151;
+}
+
+/* Ensure table text colors are appropriate for both light and dark modes */
+#residentTableBody tr td {
+    color: #374151; /* Default light mode text color */
+}
+
+.dark-mode #residentTableBody tr td {
+    color: #e5e7eb; /* Dark mode text color */
+}
+
+/* Ensure proper text coloring for pagination text */
+.dark-mode #residentOverlay .text-gray-600 {
+    color: #d1d5db !important; /* Light gray for dark mode */
+}
+
+.dark-mode .empty-state {
+    color: #9ca3af;
+}
+
+.dark-mode .empty-state i {
+    color: #6b7280;
+}
+
+/* Filter buttons */
+.filter-btn {
+    @apply px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 font-medium transition-colors duration-200;
+}
+
+.filter-btn.selected[data-filter="all"] {
+    @apply bg-purple-600 text-white hover:bg-purple-700;
+}
+
+.filter-btn.selected[data-filter="active"] {
+    @apply bg-green-600 text-white hover:bg-green-700;
+}
+
+.filter-btn.selected[data-filter="pending-renewal"] {
+    @apply bg-yellow-600 text-white hover:bg-yellow-700;
+}
+
+/* Resident Overlay Styles */
+.overlay {
+    position: fixed;
+    inset: 0; /* Match manage-room style */
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+/* Updated overlay content to match manage-room modal */
+.overlay-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 95%; /* Adjust width */
+    max-width: 900px; /* Increase max-width */
+    max-height: 90vh; /* Use viewport height */
+    overflow: hidden; /* Prevent content overflow before inner scroll */
+    display: flex;
+    flex-direction: column; /* Stack header, content, footer */
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.overlay.active .overlay-content {
+    transform: scale(1);
+}
+
+/* Search input within overlay */
+.overlay-search {
+    width: 100%;
+    padding: 0.5rem 0.75rem; /* Base padding */
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.dark-mode .overlay-search {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+/* Pagination Styles */
+.overlay-pagination .pagination-btn {
+    @apply px-3 py-1 rounded-md text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.dark-mode .overlay-pagination .pagination-btn {
+    @apply text-gray-300 hover:bg-gray-600;
+}
+
+/* Filter Panel Animation */
+#filterPanel {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#filterPanel.visible {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Add transition for transform to all pagination buttons in resident overlay */
+#residentOverlay #residentPaginationButtons .pagination-button,
+#residentOverlay #residentPaginationButtons .resident-page-btn {
+    transition: transform 0.15s ease-out;
+}
+
+/* Apply lift effect on hover to all non-disabled pagination buttons in resident overlay */
+#residentOverlay #residentPaginationButtons .pagination-button:not([disabled]):hover,
+#residentOverlay #residentPaginationButtons .resident-page-btn:hover {
+    transform: translateY(-2px);
+}
+
+.tenant-card.pagination-hidden {
+    display: none !important;
+}
+
+/* Dark mode styles for resident overlay specific sections */
+.dark-mode #residentOverlay .border-b.p-4.bg-gray-50,
+.dark-mode #residentOverlay .px-4.py-3.border-b.border-gray-200.bg-gray-50,
+.dark-mode #residentOverlay .px-4.py-3.border-t.border-gray-200.bg-gray-50 {
+    background-color: #1e293b !important; /* Darker blue-gray */
+    border-color: #334155 !important; /* Darker border color */
+    color: #e2e8f0;
+}
+
+.dark-mode #residentOverlay .text-gray-800,
+.dark-mode #residentOverlay h3.text-xl {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode #residentOverlay .bg-white {
+    background-color: #0f172a !important; /* Even darker blue for content area */
+}
+
+/* Updated table header styling with distinct color */
+.dark-mode #residentOverlay thead {
+    background-color: #374151 !important;
+}
+
+.dark-mode #residentOverlay thead tr {
+    border-bottom: 2px solid #475569 !important;
+    background-color: #374151 !important; /* darker background for header */
+}
+
+.dark-mode #residentOverlay thead th {
+    color: #d1d5db !important; /* Brighter text for headers */
+    border-color: #475569 !important;
+    font-weight: 600 !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+}
+
+.dark-mode #residentOverlay tbody td {
+    border-color: #334155 !important;
+}
+
+.dark-mode #residentOverlay tbody tr {
+    background-color: #1F2937 !important; 
+}
+
+/* Table row hover effect in dark mode */
+/* .dark-mode #residentOverlay tbody tr:hover {
+    background-color: #2d3748 !important;
+} */
+
+.dark-mode #residentOverlay .text-gray-500 {
+    color: #94a3b8 !important;
+}
+
+.dark-mode #residentOverlay input,
+.dark-mode #residentOverlay select {
+    background-color: #334155 !important;
+    border-color: #475569 !important;
+    color: #e2e8f0 !important;
+}
+
+.dark-mode #residentOverlay .text-purple-600 {
+    color: #c4b5fd !important; /* Lighter purple for dark mode */
+}
+
+.dark-mode #residentOverlay .text-blue-600 {
+    color: #93c5fd !important; /* Lighter blue for dark mode */
+}
+
+.dark-mode #residentOverlay .text-red-600 {
+    color: #fca5a5 !important; /* Lighter red for dark mode */
+}
+
+.dark-mode #residentOverlay .hover\:bg-purple-100:hover {
+    background-color: rgba(196, 181, 253, 0.2) !important; /* Translucent purple hover */
+}
+
+.dark-mode #residentOverlay .hover\:bg-blue-100:hover {
+    background-color: rgba(147, 197, 253, 0.2) !important; /* Translucent blue hover */
+}
+
+.dark-mode #residentOverlay .hover\:bg-red-100:hover {
+    background-color: rgba(252, 165, 165, 0.2) !important; /* Translucent red hover */
+}
+
+.dark-mode #residentOverlay .bg-purple-600 {
+    background-color: #7c3aed !important;
+}
+
+.dark-mode #residentOverlay .hover\:bg-purple-700:hover {
+    background-color: #6d28d9 !important;
+}
+
+.dark-mode #residentOverlay .bg-gray-200 {
+    background-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+.dark-mode #residentOverlay .hover\:bg-gray-300:hover {
+    background-color: #475569 !important;
+}
+
+/* Ensure table text colors are appropriate for both light and dark modes */
+#residentTableBody tr td {
+    color: #374151; /* Default light mode text color */
+}
+
+.dark-mode #residentTableBody tr td {
+    color: #e5e7eb; /* Dark mode text color */
+}
+
+/* Ensure proper text coloring for pagination text */
+.dark-mode #residentOverlay .text-gray-600 {
+    color: #d1d5db !important; /* Light gray for dark mode */
+}
+
+.dark-mode .empty-state {
+    color: #9ca3af;
+}
+
+.dark-mode .empty-state i {
+    color: #6b7280;
+}
+
+/* Specific styling for the resident table header */
+.resident-table-header {
+    /* Light mode styling */
+    background-color: #f3f4f6;
+    border-bottom: 2px solid #e5e7eb;
+    height: 48px; /* Set fixed height for consistency */
+}
+
+/* Dark mode styling with !important to override global styles */
+.dark-mode .resident-table-header {
+    background-color: #4b5563 !important; /* Much darker than the body */
+    border-bottom: 2px solid #6b7280 !important;
+    height: 48px !important; /* Ensure same height in dark mode */
+}
+
+.dark-mode .resident-table-header th {
+    color: #f9fafb !important; /* Very light text for better contrast */
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+}
+
+/* Specific styling for the resident table body */
+.resident-table-body tr {
+    /* Light mode styling */
+    background-color: #ffffff;
+}
+
+/* Dark mode styling with !important to override global styles */
+.dark-mode .resident-table-body tr {
+    background-color: #1f2937 !important; /* Different than header */
+    color: #d1d5db !important;
+}
+
+/* Remove ALL hover effects completely */
+.dark-mode .resident-table-body tr:hover,
+.resident-table-body tr:hover,
+.dark-mode #residentOverlay tbody tr:hover,
+#residentOverlay tbody tr:hover {
+    background-color: inherit !important; /* Inherit from parent - no color change */
+    transform: none !important; /* No transform on hover */
+    transition: none !important; /* No transition on hover */
+}
+
+/* Global override for ALL hover effects on table rows - highest specificity */
+#residentOverlay table tbody tr:hover,
+.resident-table-body tr:hover,
+body .resident-table-body tr:hover,
+body #residentOverlay tbody tr:hover,
+body.dark-mode #residentOverlay tbody tr:hover,
+body.dark-mode .resident-table-body tr:hover {
+    background-color: inherit !important;
+    transform: none !important;
+    transition: none !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+    color: inherit !important;
+}

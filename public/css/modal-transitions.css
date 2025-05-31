@@ -1,0 +1,141 @@
+/* Modal Transition Styles - Exactly Matching manage-room.html */
+
+/* Basic modal styling */
+.persistent-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 98;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
+}
+
+/* Base modal styles */
+#recordsModal,
+#occupantDetailsModal,
+#activityModal,
+#activityLogModal,
+#activityDetailsModal {
+    transition: opacity 0.4s ease-out;
+    opacity: 0;
+    display: flex !important;
+    visibility: hidden;
+    z-index: 99;
+    background-color: transparent !important;
+}
+
+/* Hidden state */
+#recordsModal.hidden,
+#occupantDetailsModal.hidden,
+#activityModal.hidden,
+#activityLogModal.hidden,
+#activityDetailsModal.hidden {
+    display: none !important;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Visible state with transition */
+#recordsModal:not(.hidden),
+#occupantDetailsModal:not(.hidden),
+#activityModal:not(.hidden),
+#activityLogModal:not(.hidden),
+#activityDetailsModal:not(.hidden) {
+    visibility: visible;
+}
+
+/* Active state */
+#recordsModal.active,
+#occupantDetailsModal.active,
+#activityModal.active,
+#activityLogModal.active,
+#activityDetailsModal.active {
+    opacity: 1;
+}
+
+/* Modal content transition */
+#recordsModal .bg-white,
+#recordsModal .activity-modal-bg,
+#occupantDetailsModal .bg-white,
+#occupantDetailsModal .activity-modal-bg,
+#activityModal .bg-white,
+#activityModal .activity-modal-bg,
+#activityLogModal .bg-white,
+#activityLogModal .activity-modal-bg,
+#activityDetailsModal .bg-white,
+#activityDetailsModal .activity-modal-bg {
+    transform: translateY(30px); /* Start from a bit further down */
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out, background-color 0.4s ease;
+    /* Use a smoother cubic-bezier curve that slows down at the end - this feels more natural */
+}
+
+/* Modal content active state */
+#recordsModal.active .bg-white,
+#recordsModal.active .activity-modal-bg,
+#occupantDetailsModal.active .bg-white,
+#occupantDetailsModal.active .activity-modal-bg,
+#activityModal.active .bg-white,
+#activityModal.active .activity-modal-bg,
+#activityLogModal.active .bg-white,
+#activityLogModal.active .activity-modal-bg,
+#activityDetailsModal.active .bg-white,
+#activityDetailsModal.active .activity-modal-bg {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Modal header with back button */
+.modal-header-with-back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.modal-header-with-back h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.modal-back-button {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+}
+
+.modal-back-button:hover {
+    color: #374151;
+}
+
+.modal-back-button i {
+    margin-right: 0.375rem;
+    font-size: 0.875rem;
+}
+
+/* Improved button styling */
+.view-details-btn,
+.view-activity-btn {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.view-details-btn:hover,
+.view-activity-btn:hover {
+    background-color: #e0f2fe;
+    border-color: #3b82f6;
+}

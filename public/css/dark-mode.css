@@ -1,0 +1,730 @@
+/*<==For Darkmode==>*/
+.dark-mode {
+    background-color: #1a202c;
+    color: #cbd5e0;
+}
+
+.dark-mode body {
+    background-color: #1a202c !important;
+    /*Ensure full background change */
+    /*background-color: #3c4657 !important;*/
+}
+
+/* Dark mode colors for UI elements */
+.dark-mode .card {
+    background-color: #2d3748;
+    /*background-color: #25282e !important;*/
+}
+
+.dark-mode .bg-white {
+    background-color: #2d3748;
+}
+
+.dark-mode .bg-gray-100 {
+    background-color: #1a202c !important;
+}
+
+.dark-mode .bg-gray-200 {
+  background-color: #1a202c !important;
+}
+
+.dark-mode .bg-gray-100 {
+    background-color: #1a202c;
+}
+
+.dark-mode .bg-gray-200 {
+    background-color: #4a5568;
+}
+
+.dark-mode .bg-gray-300 {
+    background-color: #718096;
+}
+
+.dark-mode .bg-gray-400 {
+    background-color: #a0aec0;
+}
+
+.dark-mode .bg-gray-500 {
+    background-color: #cbd5e0;
+}
+
+.dark-mode .text-gray-700 {
+    color: #cbd5e0;
+}
+
+/* Dark mode border colors */
+.dark-mode .border-b {
+    border-bottom-color: #4a5568 !important;
+    /* Darker border color for dark mode */
+}
+
+.dark-mode table {
+    border-color: #4a5568 !important;
+    /* Darker border color for tables */
+}
+
+.dark-mode th,
+.dark-mode td {
+    border-color: #4a5568 !important;
+    /* Darker border color for table cells */
+}
+
+.dark-mode .dark-mode-text {
+    color: #d1d5db !important;
+    /* Equivalent to Tailwind's text-gray-300 */
+}
+
+/* Dark mode for expandable cards */
+.dark-mode .expandable-card {
+    background-color: #2d3748;
+    color: #cbd5e0;
+    box-shadow: inset 0 0 0 2px #4a5568;
+    /* Creates inner border */
+}
+
+.dark-mode .expandable-card .details {
+    background-color: #2d3748;
+    border-left: 2px solid #4a5568;
+    border-right: 2px solid #4a5568;
+    border-top: none;
+    box-shadow: 0px 2px 0px rgba(74, 85, 104, 0);
+    /* Invisible shadow */
+}
+
+.dark-mode .expandable-card .details.show {
+    box-shadow: 0px 2px 0px rgba(74, 85, 104, 1);
+    /* Simulate border smoothly */
+}
+
+.dark-mode .expandable-card .details p {
+    color: #cbd5e0;
+}
+
+.dark-mode .expandable-card .details a {
+    color: #63b3ed;
+}
+
+/* Dark mode for details */
+.dark-mode .details {
+    background-color: #1f2937;
+    border-top: 1px solid #374151;
+}
+
+.dark-mode .details .text-gray-500,
+.dark-mode .details .text-gray-600,
+.dark-mode .details .text-xs,
+.dark-mode .details span:not([class*="text-blue-"]):not([class*="text-green-"]):not([class*="text-red-"]):not([class*="text-yellow-"]):not([class*="text-orange-"]) {
+    color: #d1d5db !important;
+}
+
+.dark-mode .details .bg-blue-50 {
+    background-color: rgba(59, 130, 246, 0.2);
+}
+
+.dark-mode .details .bg-green-50 {
+    background-color: rgba(16, 185, 129, 0.2);
+}
+
+.dark-mode .details .bg-yellow-50 {
+    background-color: rgba(245, 158, 11, 0.2);
+}
+
+.dark-mode .details .bg-red-50 {
+    background-color: rgba(239, 68, 68, 0.2);
+}
+
+.dark-mode .details .bg-orange-50 {
+    background-color: rgba(249, 115, 22, 0.2);
+}
+
+.dark-mode .details .bg-gray-50 {
+    background-color: rgba(156, 163, 175, 0.2);
+}
+
+.dark-mode .details .text-blue-700,
+.dark-mode .details .text-blue-600,
+.dark-mode .details .text-blue-800 {
+    color: #bfdbfe !important;
+}
+
+.dark-mode .details .text-green-700,
+.dark-mode .details .text-green-800 {
+    color: #a7f3d0 !important;
+}
+
+.dark-mode .details .text-yellow-700,
+.dark-mode .details .text-yellow-600,
+.dark-mode .details .text-yellow-800 {
+    color: #fde68a !important;
+}
+
+.dark-mode .details .text-red-700,
+.dark-mode .details .text-red-500 {
+    color: #fecaca !important;
+}
+
+.dark-mode .details .text-orange-700,
+.dark-mode .details .text-orange-500 {
+    color: #fed7aa !important;
+}
+
+.dark-mode .details .font-medium,
+.dark-mode .details .font-bold {
+    color: #f9fafb;
+}
+
+/* Progress bar background in dark mode */
+.dark-mode .details .bg-gray-200 {
+    background-color: #6b7280;
+}
+
+/* Ensure hover states are visible in dark mode */
+.dark-mode .details a.text-blue-500:hover {
+    color: #dbeafe !important;
+}
+
+.dark-mode .details a.text-green-500:hover {
+    color: #d1fae5 !important;
+}
+
+.dark-mode .details a.text-yellow-500:hover {
+    color: #fef3c7 !important;
+}
+
+.dark-mode .details a.text-red-500:hover {
+    color: #fee2e2 !important;
+}
+
+/* Dark mode for notification panel */
+.dark-mode #notificationPanel {
+    background-color: #1e293b;
+    border-color: #7c7c7c;
+}
+
+/* Dark mode for nav items */
+.dark-mode .nav-item {
+    /* Dark mode hover effects */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Smooth transition */
+}
+
+.dark-mode .nav-item:hover {
+    background-color: #4a5568;
+    /* Darker gray hover background */
+    color: #ffffff;
+    /* Lighter purple text on hover */
+}
+
+/* Dark mode for floor plan */
+.dark-mode #floorPlanContainer {
+    background-color: #2d3748;
+    border-color: #4a5568;
+}
+
+.dark-mode #floorSelector {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #2d3748;
+}
+
+.dark-mode #floorPlanImage {
+    filter: invert(0.85) grayscale(0.8) brightness(0.9);
+}
+
+/* Dark mode for navigation buttons */
+.dark-mode .nav-button,
+.dark-mode #zoomIn,
+.dark-mode #zoomOut {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #2d3748;
+}
+
+.dark-mode .nav-button:hover,
+.dark-mode #zoomIn:hover,
+.dark-mode #zoomOut:hover {
+    background-color: #2d3748;
+}
+
+/* For Up down left right button (floorplan) */
+/* Dark mode hover effect */
+.dark-mode #navUp:hover,
+.dark-mode #navDown:hover,
+.dark-mode #navLeft:hover,
+.dark-mode #navRight:hover {
+    background-color: #4a5568;
+    /* Dark mode hover color */
+    color: #ffffff;
+    /* Optional: Change text color on hover */
+}
+
+/* New styles for the booking cards and activity log */
+.dark-mode .bg-white {
+  background-color: #2d3748;
+}
+
+.dark-mode .border-gray-200,
+.dark-mode .border-gray-100 {
+  border-color: #374151;
+}
+
+.dark-mode .text-gray-900,
+.dark-mode .text-gray-800,
+.dark-mode .text-gray-700 {
+  color: #f3f4f6;
+}
+
+.dark-mode .text-gray-600,
+.dark-mode .text-gray-500 {
+  color: #d1d5db;
+}
+
+.dark-mode .bg-gray-50 {
+  background-color: #2d3748;
+}
+
+.bg-filter-50 {
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+
+.dark-mode .bg-filter-50 {
+  background-color: #1F2937;
+}
+
+.dark-mode .bg-gray-100 {
+  background-color: #1f2937;
+}
+
+.dark-mode .bg-gray-200 {
+  background-color: #374151;
+}
+
+.dark-mode .hover\:bg-gray-50:hover {
+  background-color: #4b5563;
+}
+
+.dark-mode .hover\:bg-gray-200:hover {
+  background-color: #374151;
+}
+
+/* Specific styles for the activity log */
+.dark-mode .h-8.w-8.rounded-full.bg-indigo-100,
+.dark-mode .h-8.w-8.rounded-full.bg-blue-100,
+.dark-mode .h-8.w-8.rounded-full.bg-green-100 {
+  background-color: rgba(99, 102, 241, 0.2);
+}
+
+.dark-mode .text-indigo-600,
+.dark-mode .text-blue-600,
+.dark-mode .text-green-600 {
+  color: #e0e7ff;
+}
+
+/* Room category breakdown cards - improved styling */
+.dark-mode .bg-gradient-to-r.from-blue-50.to-blue-100 {
+  background: linear-gradient(to right, rgba(30, 58, 138, 0.3), rgba(37, 99, 235, 0.3));
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.dark-mode .bg-gradient-to-r.from-purple-50.to-purple-100 {
+  background: linear-gradient(to right, rgba(91, 33, 182, 0.3), rgba(124, 58, 237, 0.3));
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.dark-mode .bg-gradient-to-r.from-green-50.to-green-100 {
+  background: linear-gradient(to right, rgba(6, 78, 59, 0.3), rgba(5, 150, 105, 0.3));
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+/* Add styles for 4-Person Rooms (red gradient) */
+.dark-mode .bg-gradient-to-r.from-red-50.to-red-100 {
+  background: linear-gradient(to right, rgba(153, 27, 27, 0.3), rgba(220, 38, 38, 0.3));
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Add styles for 6-Person Rooms (amber gradient) */
+.dark-mode .bg-gradient-to-r.from-amber-50.to-amber-100 {
+  background: linear-gradient(to right, rgba(146, 64, 14, 0.3), rgba(217, 119, 6, 0.3));
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+/* Category card badges */
+.dark-mode .bg-blue-200.text-blue-800 {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: #bfdbfe;
+}
+
+.dark-mode .bg-purple-200.text-purple-800 {
+  background-color: rgba(139, 92, 246, 0.3);
+  color: #ddd6fe;
+}
+
+.dark-mode .bg-green-200.text-green-800 {
+  background-color: rgba(16, 185, 129, 0.3);
+  color: #a7f3d0;
+}
+
+/* Add styles for red badge (4-Person) */
+.dark-mode .bg-red-200.text-red-800 {
+  background-color: rgba(239, 68, 68, 0.3);
+  color: #fecaca;
+}
+
+/* Add styles for amber badge (6-Person) */
+.dark-mode .bg-amber-200.text-amber-800 {
+  background-color: rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+
+/* Category card headings */
+.dark-mode .text-blue-800 {
+  color: #bfdbfe;
+}
+
+.dark-mode .text-purple-800 {
+  color: #ddd6fe;
+}
+
+.dark-mode .text-green-800 {
+  color: #a7f3d0;
+}
+
+/* Add styles for red heading (4-Person) */
+.dark-mode .text-red-800 {
+  color: #fecaca;
+}
+
+/* Add styles for amber heading (6-Person) */
+.dark-mode .text-amber-800 {
+  color: #fcd34d;
+}
+
+/* Indicator dots in category cards */
+.dark-mode .w-3.h-3.rounded-full.bg-green-500 {
+  background-color: #10b981;
+}
+
+.dark-mode .w-3.h-3.rounded-full.bg-yellow-500 {
+  background-color: #f59e0b;
+}
+
+.dark-mode .w-3.h-3.rounded-full.bg-blue-500 {
+  background-color: #3b82f6;
+}
+
+/* Make text more visible in category cards */
+.dark-mode .category-card .text-gray-600 {
+  color: #e2e8f0 !important; /* Lighter gray for better visibility */
+}
+
+/* Make SVG text more visible */
+.dark-mode .category-card svg text {
+  fill: #e2e8f0 !important; /* Brighter text for better visibility */
+  font-weight: 500; /* Make text slightly bolder */
+}
+
+/* SVG elements in the charts */
+.dark-mode svg path[stroke="#E5E7EB"] {
+  stroke: #374151;
+}
+
+.dark-mode svg path[stroke="#FBBF24"] {
+  stroke: #f59e0b;
+}
+
+/* Table row hover */
+.dark-mode tbody tr.hover\:bg-gray-50:hover {
+  background-color: #4b5563;
+}
+
+/* Progress bars in tables */
+.dark-mode .w-24.bg-gray-200.rounded-full {
+  background-color: #374151;
+}
+
+.dark-mode .bg-blue-500.h-2\.5.rounded-full {
+  background-color: #3b82f6;
+}
+
+/* SVG text color */
+.dark-mode svg text {
+  fill: #d1d5db !important;
+}
+
+/* Table header */
+.dark-mode thead.bg-gray-50 {
+  background-color: #2d3748;
+}
+
+.dark-mode .text-gray-500.uppercase {
+  color: #9ca3af;
+}
+
+/* Pagination buttons */
+.dark-mode .pagination-button,
+.dark-mode .tenant-page-btn:not(.active),
+.dark-mode .resident-pagination-btn:not(.active),
+.dark-mode button.border.border-gray-300.bg-white {
+  background-color: #1f2937 !important; /* Tailwind gray-700 */
+  color: #d1d5db !important;          /* Tailwind gray-300 for text */
+  border-color: #4b5563 !important;   /* Tailwind gray-600 for border */
+}
+
+.dark-mode .pagination-button:not([disabled]):hover,
+.dark-mode .tenant-page-btn:not(.active):hover,
+.dark-mode .resident-pagination-btn:not(.active):hover,
+.dark-mode button.border.border-gray-300.bg-white:hover {
+  background-color: #4b5563 !important; /* Tailwind gray-600 for hover */
+}
+
+/* Active pagination buttons in dark mode */
+.dark-mode .pagination-button.active,
+.dark-mode .tenant-page-btn.active,
+.dark-mode .resident-pagination-btn.active {
+  background-color: #7c3aed !important; /* purple-500 */
+  color: white !important;
+  border-color: #6d28d9 !important;    /* purple-700 */
+}
+
+/* Disabled pagination buttons in dark mode */
+.dark-mode .pagination-button[disabled] {
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #6b7280 !important; /* Tailwind gray-500 */
+  opacity: 0.6 !important;
+}
+
+/* Status badges */
+.dark-mode .bg-green-100.text-green-800,
+.dark-mode .bg-yellow-100.text-yellow-800,
+.dark-mode .bg-red-100.text-red-800 {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #a7f3d0;
+}
+
+.dark-mode .bg-yellow-100.text-yellow-800 {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: #fde68a;
+}
+
+.dark-mode .bg-red-100.text-red-800 {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #fecaca;
+}
+
+/* View details buttons */
+.dark-mode .text-blue-500 {
+  color: #93c5fd;
+}
+
+.dark-mode .text-blue-500:hover {
+  color: #bfdbfe;
+}
+
+/* Dark mode styles for card slider navigation buttons */
+.dark-mode #prevButton,
+.dark-mode #nextButton {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #a0aec0;
+}
+
+.dark-mode #prevButton:hover:not(:disabled),
+.dark-mode #nextButton:hover:not(:disabled) {
+    color: #60a5fa;
+    border-color: #60a5fa;
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+}
+
+/*New 23.03*/
+        /* Dark mode styles for table contrast */
+        .dark-mode .overflow-hidden.rounded-lg.border.border-gray-200 {
+            border-color: #4b5563;
+        }
+        
+        .dark-mode .bg-gray-50.px-4.py-3 {
+            background-color: #374151;
+        }
+        
+        .dark-mode .bg-white.px-4.py-3 {
+            background-color: #1F2937;
+        }
+        
+        .dark-mode .bg-white.divide-y.divide-gray-200 {
+            background-color: #1F2937;
+        }
+        
+        .dark-mode tr {
+            background-color: #1F2937;
+        }
+        
+        .dark-mode thead.bg-gray-50 {
+            background-color: #374151;
+        }
+        
+        .dark-mode .text-gray-700 {
+            color: #E5E7EB;
+        }
+        
+        .dark-mode .text-gray-900 {
+            color: #F9FAFB;
+        }
+        
+        .dark-mode .text-gray-800 {
+            color: #F3F4F6;
+        }
+        
+        .dark-mode .text-gray-500 {
+            color: #D1D5DB;
+        }
+        
+        .dark-mode .border-gray-200 {
+            border-color: #4B5563;
+        }
+        
+        .dark-mode .border-b.border-gray-200 {
+            border-color: #4B5563;
+        }
+        
+        /* Dark mode styles for booking cards */
+        .dark-mode .bg-white.rounded-lg.border.border-gray-200 {
+            background-color: #1F2937;
+            border-color: #4B5563;
+        }
+        
+        .dark-mode .bg-white.rounded-lg.border.border-gray-200:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-mode .bg-gray-50 {
+            background-color: #111827;
+        }
+        
+        .dark-mode .border-gray-100 {
+            border-color: #374151;
+        }
+        
+        /* Preserve the status indicator colors but make them slightly darker */
+        .dark-mode .bg-green-100 {
+            background-color: rgba(16, 185, 129, 0.2);
+        }
+        
+        .dark-mode .bg-yellow-100 {
+            background-color: rgba(245, 158, 11, 0.2);
+        }
+        
+        .dark-mode .bg-red-100 {
+            background-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .dark-mode .text-green-800 {
+            color: #A7F3D0;
+        }
+        
+        .dark-mode .text-yellow-800 {
+            color: #FDE68A;
+        }
+        
+        .dark-mode .text-red-800 {
+            color: #FECACA;
+        }
+        
+        /* Dark mode styles for futuristic quick actions */
+        .dark-mode .backdrop-blur-sm.bg-white.bg-opacity-10 {
+            background-color: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-color: rgba(75, 85, 99, 0.3);
+        }
+        
+        .dark-mode .backdrop-blur-sm.bg-white.bg-opacity-10:hover {
+            background-color: rgba(31, 41, 55, 0.8);
+        }
+        
+        .dark-mode .backdrop-blur-sm.bg-white.bg-opacity-10 .text-gray-800 {
+            color: #E5E7EB;
+        }
+        
+        /* Specific style for Quick Action cards in dark mode */
+        .dark-mode .grid-cols-2.gap-3 .backdrop-blur-sm.bg-gray-100 {
+            background-color: #2d3748 !important;
+            border-color: #4B5563;
+        }
+        
+        .dark-mode .grid-cols-2.gap-3 .backdrop-blur-sm.bg-gray-100:hover {
+            background-color: #263345 !important;
+        }
+        
+        /* Light mode hover effect for Quick Action cards */
+        .grid-cols-2.gap-3 .backdrop-blur-sm.bg-gray-100 {
+            transition: all 0.3s ease;
+        }
+        
+        .grid-cols-2.gap-3 .backdrop-blur-sm.bg-gray-100:hover {
+            background-color: #e5e7eb !important;
+            border-color: #9ca3af;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        /* Dark mode for badges and tags */
+        .dark-mode .today-badge {
+            background-color: rgba(30, 64, 175, 0.4);
+            color: rgb(191, 219, 254);
+        }
+        
+        /* Enhance shadow in dark mode for better visibility */
+        .dark-mode .shadow-lg, .dark-mode .hover\:shadow-md:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Dark mode hover effect for View All Activity button */
+        .dark-mode .bg-gray-100.hover\:bg-gray-200 {
+            background-color: #374151;
+            color: #D1D5DB;
+        }
+        
+        .dark-mode .bg-gray-100.hover\:bg-gray-200:hover {
+            background-color: #4B5563 !important;
+            color: #F3F4F6;
+        }
+        
+        /* Add these new dark mode button style overrides */
+        .dark-mode .bg-purple-500 {
+            background-color: #7337db;
+        }
+        /*
+        .dark-mode .bg-purple-500.text-white.hover\:bg-purple-600 {
+            background-color: #7337db;
+        }
+        
+        .dark-mode .hover\:bg-purple-600:hover {
+            background-color: #6025c5;
+        }
+        
+        .dark-mode .bg-purple-500.text-white {
+            background-color: #7337db;
+        }
+        
+        .dark-mode button.w-8.h-8.flex.items-center.justify-center.rounded-md.border.border-gray-300.bg-purple-500.text-white {
+            background-color: #7337db;
+        }
+        
+        .dark-mode .text-xs.px-3.py-1.rounded-md.bg-purple-500.text-white.hover\:bg-purple-600 {
+            background-color: #7337db;
+        }
+        */
+
+/* Dark mode for collapse button */
+.dark-mode #closeActivityDetails {
+    background-color: #1a202c;
+    border-color: #4a5568;
+    color: #cbd5e0;
+}
+
+.dark-mode #closeActivityDetails:hover {
+    background-color: #2d3748;
+    color: #f7fafc;
+}

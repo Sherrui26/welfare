@@ -1,0 +1,43 @@
+/*For FloorPlan*/
+/* Styling for floor plan container */
+#floorPlanContainer {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 50px);
+    /* Dynamic height */
+    min-height: 300px;
+    /* Prevent it from being too small */
+    max-height: 700px;
+    /* Prevent excessive growth */
+}
+
+/* Styling for floor plan image */
+#floorPlanImage {
+    transform-origin: center;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+}
+
+/*<==For Overlay Style==>*/
+.room-overlay {
+    position: absolute;
+    transition: all 0.3s ease;
+    /* Smooth movement */
+}
+
+.available {
+    background-color: green;
+}
+
+.full {
+    background-color: red;
+}
+
+.blocked {
+    background-color: gray;
+}
+
+.maintenance {
+    background-color: orange;
+} 

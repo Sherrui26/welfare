@@ -1,0 +1,93 @@
+#header {
+    /* Ensure header stays fixed */
+    left: 64px;
+    /* Initial collapsed width */
+    right: 0;
+    transition: left 0.3s ease;
+}
+
+.sidebar-expanded {
+    width: 250px;
+    transition: width 0.3s ease;
+    /* Ensure smooth width transition */
+}
+
+.sidebar-collapsed {
+    width: 64px;
+    transition: width 0.3s ease;
+    /* Ensure smooth width transition */
+}
+
+.logo-text {
+    opacity: 0;
+    width: 0;
+    /* Initially set width to 0 */
+    transition: opacity 0.3s ease, width 0.3s ease;
+    /* Animate opacity and width */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflow */
+}
+
+.sidebar-expanded .logo-text {
+    opacity: 1;
+    width: auto;
+    /* Expand to full width */
+}
+
+.logo-image {
+    width: 32px;
+    height: 32px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-collapsed .nav-item {
+    justify-content: center;
+}
+
+.sidebar-expanded .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Space between icon and text */
+    padding-left: 15px;
+    /* Adjust as needed */
+}
+
+.nav-item {
+    padding: 1rem;
+    /* Ensure consistent padding */
+    margin: 0;
+    /* Remove any default margins */
+    line-height: 1.5;
+    /* Consistent line height */
+}
+
+.nav-item i {
+    width: 24px;
+    /* Ensure icons have the same width */
+    text-align: center;
+    /* Center icons */
+}
+
+.nav-item span {
+    margin-left: 1rem;
+    font-size: 1rem;
+    opacity: 0;
+    /* Initially hidden */
+    width: 0;
+    /* Initially set width to 0 */
+    transition: opacity 0.3s ease, width 0.3s ease;
+    /* Animate opacity and width */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflow */
+}
+
+.sidebar-expanded .nav-item span {
+    opacity: 1 !important;
+    width: auto !important;
+    display: inline-block !important;
+} 

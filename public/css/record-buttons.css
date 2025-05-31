@@ -1,0 +1,107 @@
+.records-view-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px; /* full rounded */
+    background-color: #f3f4f6; /* bg-gray-100 */
+    color: #6B7280;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.records-view-btn:hover {
+    background-color: #e5e7eb !important; /* bg-gray-200 - using !important to override any conflicting styles */
+    color: #4B5563;
+}
+
+.records-view-btn i {
+    font-size: 16px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.records-view-btn:hover .fa-info-circle {
+    color: #3b82f6 !important; /* Blue in light mode */
+    transform: scale(1.1);
+}
+
+/* Also style the ellipsis button specifically */
+.records-toggle-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: #f3f4f6; /* bg-gray-100 */
+    color: #6B7280;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.records-toggle-btn:hover {
+    background-color: #e5e7eb !important; /* bg-gray-200 */
+    color: #4B5563;
+}
+
+.records-toggle-btn i {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.records-toggle-btn:hover .fa-ellipsis-h {
+    color: #f59e0b !important; /* Orange in light mode */
+    transform: scale(1.1);
+}
+
+/* Row highlight effect */
+.record-row-highlighted {
+    background-color: rgba(124, 58, 237, 0.05) !important;
+    position: relative !important;
+    transition: background-color 0.3s ease-out;
+}
+
+.record-row-highlighted::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #7c3aed;
+    z-index: 10;
+}
+
+/* Dark mode support */
+.dark-mode .records-view-btn,
+.dark-mode .records-toggle-btn {
+    background-color: #374151; /* dark gray for dark mode */
+    color: #d1d5db;
+}
+
+.dark-mode .records-view-btn:hover,
+.dark-mode .records-toggle-btn:hover {
+    background-color: #4b5563 !important; /* darker gray for hover in dark mode */
+    color: #f9fafb;
+}
+
+.dark-mode .records-view-btn:hover .fa-info-circle {
+    color: #60a5fa !important; /* Bright blue color in dark mode */
+    transform: scale(1.2); /* Slightly enlarge on hover */
+    text-shadow: 0 0 8px rgba(96, 165, 250, 0.6); /* Add glow effect */
+}
+
+.dark-mode .records-toggle-btn:hover .fa-ellipsis-h {
+    color: #f59e0b !important; /* Amber color on hover */
+    transform: scale(1.2);
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.6); /* Glow effect */
+}
+
+/* Dark mode row highlight */
+.dark-mode .record-row-highlighted {
+    background-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+.dark-mode .record-row-highlighted::before {
+    background-color: #8b5cf6;
+}

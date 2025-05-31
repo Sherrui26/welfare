@@ -1,0 +1,105 @@
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(243, 244, 246, 0.8);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.6);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 114, 128, 0.8);
+}
+
+/* Dark mode scrollbar */
+.dark-mode ::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.6);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+    background: rgba(75, 85, 99, 0.5);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 114, 128, 0.7);
+}
+
+/* Thin scrollbar for specific panels */
+.thin-scrollbar::-webkit-scrollbar,
+.thin-scrollbar .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Hide scrollbar when not needed */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Firefox scrollbar support */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.6) rgba(243, 244, 246, 0.8);
+}
+
+.dark-mode * {
+    scrollbar-color: rgba(75, 85, 99, 0.5) rgba(31, 41, 55, 0.6);
+}
+
+/* Collapse button styling */
+#closeActivityDetails {
+    opacity: 0.8;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    background-color: transparent !important; 
+    box-shadow: none !important;
+    color: #6b7280; /* Default light mode icon color (Tailwind gray-500) */
+    /* Ensure button is clickable even if outer panel is overflow-hidden initially */
+    /* Tailwind classes like rounded-r are still applied from HTML */
+}
+
+#closeActivityDetails:hover {
+    opacity: 1;
+    color: #1f2937; /* Darker icon color on hover (Tailwind gray-800) */
+}
+
+/* No specific background for .active-collapse-btn needed now */
+/* #closeActivityDetails.active-collapse-btn {} */
+
+/* Dark mode for button icon color */
+.dark-mode #closeActivityDetails {
+    color: #9ca3af; /* Tailwind gray-400 for dark mode icon */
+}
+
+.dark-mode #closeActivityDetails:hover {
+    color: #f3f4f6; /* Lighter icon color on hover for dark mode (Tailwind gray-100) */
+}
+
+/* Styles for the inner content wrapper to ensure it aligns correctly with the button */
+#activityDetailsInnerContentWrapper {
+    position: relative; /* To contain absolutely positioned elements if any, and for potential future use */
+    width: calc(100% - 1.25rem); /* 1.25rem is ml-5 (20px) */
+    /* Base Tailwind classes like bg-gray-50, border-l, ml-5, shadow-lg, rounded-r-lg, overflow-hidden are applied from HTML */
+}
+
+/* Explicit dark mode styles for the activity details panel parts */
+.dark-mode #activityDetailsInnerContentWrapper {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    border-left-color: #374151; /* Tailwind gray-700 */
+}
+
+.dark-mode #activityDetailsPanelHeader {
+    background-color: #374151; /* Tailwind gray-700 */
+    border-bottom-color: #4b5563; /* Tailwind gray-600 */
+}
+
+.dark-mode #activityDetailsPanelHeaderText {
+    color: #e5e7eb; /* Tailwind gray-200 */
+} 

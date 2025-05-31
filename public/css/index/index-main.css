@@ -1,0 +1,227 @@
+
+        /* Fix for focus ring in dark mode */
+        select, input, button {
+            transition: all 0.2s ease;
+        }
+        
+        select:focus, input:focus, button:focus {
+            outline: none !important;
+            border-color: #8b5cf6 !important; /* purple-500 */
+            box-shadow: none !important;
+        }
+        
+        .dark-mode select:focus, 
+        .dark-mode input:focus, 
+        .dark-mode button:focus {
+            border-color: #a78bfa !important; /* purple-400 */
+        }
+        
+        /* Use consistent styling for all form controls */
+        select, input[type="text"] {
+            border-radius: 0.375rem;
+        }
+        
+        /* Dark mode specific styling for pagination footer */
+        .dark-mode .pagination-footer {
+            background-color: #1e293b !important;
+            border-color: #374151 !important;
+        }
+        
+        /* Pagination styling */
+        .pagination-button {
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out, border-color 0.15s ease-out !important;
+        }
+        
+        /* Ensure pagination buttons have a consistent transition in dark mode */
+        .dark-mode .pagination-button {
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out, border-color 0.15s ease-out !important;
+        }
+        
+        /* Add this class to disable transitions temporarily */
+        .disable-transitions .pagination-button {
+            transition: none !important;
+        }
+        
+        .pagination-button:not([disabled]):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Fix navigation arrows */
+        .pagination-button:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border-color: #D1D5DB !important; /* Gray-300 */
+        }
+        
+        /* Fix pagination button disabled state */
+        .pagination-button:disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            background-color: #F3F4F6 !important; /* Gray-100 */
+            color: #6B7280 !important; /* Gray-500 */
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Active state styling to match tenant pagination */
+        .pagination-button.active, 
+        .pagination-button.bg-purple-500 {
+            background-color: #8B5CF6 !important;
+            color: white !important;
+            border-color: #8B5CF6 !important;
+        }
+        
+        /* Hover states to match exactly */
+        .pagination-button:not([disabled]):hover:not(.active):not(.bg-purple-500) {
+            background-color: #F3F4F6 !important; /* Gray-100 */
+            border-color: #D1D5DB !important; /* Gray-300 */
+            color: #111827 !important; /* Gray-900 */
+            transform: translateY(-2px) !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        /* Dark mode styles for pagination */
+        .dark-mode .pagination-button {
+            background-color: #1F2937 !important; /* Gray-800 */
+            border-color: #374151 !important; /* Gray-700 */
+            color: #E5E7EB !important; /* Gray-200 */
+        }
+        
+        .dark-mode .pagination-button:disabled {
+            opacity: 0.5 !important;
+            background-color: #111827 !important; /* Gray-900 */
+            color: #6B7280 !important; /* Gray-500 */
+        }
+        
+        .dark-mode .pagination-button:not([disabled]):hover:not(.active):not(.bg-purple-500) {
+            background-color: #374151 !important; /* Gray-700 */
+            border-color: #4B5563 !important; /* Gray-600 */
+            color: #F9FAFB !important; /* Gray-50 */
+            transform: translateY(-2px) !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .dark-mode .pagination-button.bg-purple-500,
+        .dark-mode .pagination-button.active {
+            background-color: #7c3aed !important; /* Purple-500 */
+            border-color: #7C3AED !important; /* Purple-600 */
+            color: white !important;
+        }
+        
+        .dark-mode .pagination-button.bg-purple-500:hover,
+        .dark-mode .pagination-button.active:hover {
+            background-color: #7C3AED !important; /* Purple-600 */
+            transform: translateY(-2px) !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .dark-mode .pagination-button.bg-purple-500:hover,
+        .dark-mode .pagination-button.active:hover {
+            background-color: #7C3AED !important; /* Purple-600 */
+            transform: translateY(-2px) !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        /* Override any Tailwind focus rings */
+        *:focus {
+            --tw-ring-offset-shadow: 0 0 #0000 !important;
+            --tw-ring-shadow: 0 0 #0000 !important;
+            --tw-shadow: 0 0 #0000 !important;
+            --tw-ring-offset-width: 0 !important;
+            --tw-ring-width: 0 !important;
+            --tw-ring-color: transparent !important;
+            --tw-ring-offset-color: transparent !important;
+            --tw-ring-offset-shadow: none !important;
+        }
+        
+        /* Override for closeActivityDetails button specifically */
+        #closeActivityDetails, #closeActivityDetails:focus, #closeActivityDetails:active {
+            outline: none !important;
+            box-shadow: none !important;
+            --tw-ring-offset-shadow: none !important;
+            --tw-ring-shadow: none !important;
+            --tw-shadow: none !important;
+            --tw-ring-offset-width: 0 !important;
+            --tw-ring-width: 0 !important;
+            --tw-ring-color: transparent !important;
+            --tw-ring-offset-color: transparent !important;
+            border-color: #e5e7eb !important; /* Light gray border for light mode */
+        }
+        
+        #closeActivityDetails:hover {
+            background-color: #e5e7eb !important;
+            color: #4b5563 !important;
+        }
+        
+        .dark-mode #closeActivityDetails, .dark-mode #closeActivityDetails:focus, .dark-mode #closeActivityDetails:active {
+            border-color: #4a5568 !important; /* Darker border for dark mode */
+        }
+        
+        .dark-mode #closeActivityDetails:hover {
+            background-color: #2d3748 !important;
+            color: #f7fafc !important;
+        }
+        
+        .activity-modal-bg {
+          background-color: white;
+        }
+        
+        .dark-mode .activity-modal-bg {
+          background-color: #2d3748;
+        }
+
+        .dark-mode .bg-red-100.text-red-800 {
+          background-color: rgb(255 0 0 / 59%) !important;
+          color: #ffeded !important;
+        }
+
+        .dark-mode .bg-green-500.text-indigo-800 {
+          background-color: rgb(34 197 94 / 65%) !important;
+          color: #ffeded !important;
+        }
+
+        .dark-mode .card.basic-card {
+          background-color: #2d3748;
+        }
+
+        .dark-mode .bg-indigo-100.text-indigo-800 {
+          background-color: rgb(34 197 94 / 65%) !important;
+          color: #ffeded !important;
+        }
+   
+        /* Enhanced back button styling */
+        .modal-back-button {
+            color: #6b7280; /* Gray-500 */
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            margin-right: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            background-color: #f3f4f6; /* Light gray background */
+            border-radius: 0.375rem;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            min-width: 4rem; /* Ensure minimum width for better clickability */
+            white-space: nowrap; /* Keep text on single line */
+            -webkit-user-select: none; /* For Safari support */
+            user-select: none; /* Prevent text selection */
+        }
+
+        .modal-back-button:hover {
+            color: #4b5563; /* Gray-700 */
+            background-color: #e5e7eb;
+            transform: translateX(-2px);
+        }
+
+        .modal-back-button i {
+            font-size: 0.875rem;
+            margin-right: 0.375rem; /* Space between icon and text */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .modal-back-button span {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
