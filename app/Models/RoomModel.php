@@ -183,11 +183,19 @@ class RoomModel extends Model
     {
         $builder = $this->builder();
         
-        // Apply filters if they exist
-        if (isset($filters['room_number']) && !empty($filters['room_number'])) {
-            $builder->like('room_number', $filters['room_number']);
+        // Apply search filter if it exists
+        if (isset($filters['search']) && !empty($filters['search'])) {
+            $searchTerm = '%' . $filters['search'] . '%';
+            $builder->groupStart()
+                ->like('room_number', $searchTerm)
+                ->orLike('floor', $searchTerm)
+                ->orLike('room_type', $searchTerm)
+                ->orLike('capacity', $searchTerm)
+                ->orLike('status', $searchTerm)
+            ->groupEnd();
         }
         
+        // Apply specific filters if they exist
         if (isset($filters['floor']) && !empty($filters['floor'])) {
             $builder->where('floor', $filters['floor']);
         }

@@ -103,7 +103,7 @@
         </div>
 </div>
 <!-- Add New Room Modal -->
-<div id="addRoomModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden flex items-center justify-center">
+<div id="addRoomModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center" style="display: none;">
         <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 overflow-hidden max-h-[90vh]">
             <div class="border-b p-4 bg-gray-50">
                 <div class="modal-header-with-back">
@@ -126,11 +126,11 @@
                                 <img id="roomImagePreview" src="https://placehold.co/600x400?text=Room+Image" alt="Room Preview" class="object-cover w-full h-full" />
                             </div>
                             <div class="mt-4">
-                                <label for="roomStatus" class="block text-sm font-medium text-gray-700 mb-1">Initial Status</label>
-                                <select id="roomStatus" name="roomStatus" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Initial Status</label>
+                                <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
                                     <option value="available" selected>Available</option>
                                     <option value="maintenance">Under Maintenance</option>
-                                    <option value="unavailable">Unavailable</option>
+                                    <option value="blocked">Blocked</option>
                                 </select>
                             </div>
                             
@@ -150,24 +150,24 @@
                         <div class="md:col-span-2">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="roomNumber" class="block text-sm font-medium text-gray-700 mb-1">Room Number</label>
-                                    <input type="text" id="roomNumber" name="roomNumber" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. 11" required>
+                                    <label for="room_number" class="block text-sm font-medium text-gray-700 mb-1">Room Number</label>
+                                    <input type="text" id="room_number" name="room_number" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. B1-01" required>
                                 </div>
                                 <div>
-                                    <label for="floorNumber" class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
-                                    <select id="floorNumber" name="floorNumber" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                    <label for="floor" class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
+                                    <select id="floor" name="floor" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
                                         <option value="" disabled selected>Select floor</option>
-                                        <option value="1">B1 Floor</option>
-                                        <option value="2">B2 Floor</option>
-                                        <option value="3">B3 Floor</option>
-                                        <option value="4">B4 Floor</option>
-                                        <option value="5">B5 Floor</option>
-                                        <option value="6">B6 Floor</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="B3">B3</option>
+                                        <option value="B4">B4</option>
+                                        <option value="B5">B5</option>
+                                        <option value="B6">B6</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="totalBedspaces" class="block text-sm font-medium text-gray-700 mb-1">Total Bedspaces</label>
-                                    <input type="number" id="totalBedspaces" name="totalBedspaces" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. 6" value="6" min="1" max="12" required>
+                                    <label for="capacity" class="block text-sm font-medium text-gray-700 mb-1">Total Bedspaces</label>
+                                    <input type="number" id="capacity" name="capacity" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. 6" value="6" min="1" max="12" required>
                                 </div>
                                 <div>
                                     <label for="roomArea" class="block text-sm font-medium text-gray-700 mb-1">Room Area (m²)</label>
@@ -183,18 +183,46 @@
                                 </div>
                             </div>
                             
-                            <!-- Bathroom Type -->
+                            <!-- Room Type -->
                             <div class="mt-6">
-                                <h4 class="font-medium text-gray-700 mb-2">Bathroom Type</h4>
+                                <h4 class="font-medium text-gray-700 mb-2">Room Type</h4>
                                 <div class="flex items-center space-x-4 mt-2">
                                     <label class="inline-flex items-center">
-                                        <input type="radio" name="bathroomType" value="attached" class="form-radio" checked>
-                                        <span class="ml-2">Attached Bathroom</span>
+                                        <input type="radio" name="room_type" value="standard" class="form-radio" checked>
+                                        <span class="ml-2">Standard (6-bed)</span>
                                     </label>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" name="bathroomType" value="common" class="form-radio">
-                                        <span class="ml-2">Common Toilet</span>
+                                        <input type="radio" name="room_type" value="premium" class="form-radio">
+                                        <span class="ml-2">Premium (4-bed)</span>
                                     </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="room_type" value="deluxe" class="form-radio">
+                                        <span class="ml-2">Deluxe (2-bed)</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Maintenance Notes (conditional) -->
+                            <div id="maintenanceFields" class="mt-6 hidden">
+                                <h4 class="font-medium text-gray-700 mb-2">Maintenance Information</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="maintenance_note" class="block text-sm font-medium text-gray-700 mb-1">Maintenance Notes</label>
+                                        <textarea id="maintenance_note" name="maintenance_note" class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3" placeholder="Enter maintenance details"></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="next_maintenance_date" class="block text-sm font-medium text-gray-700 mb-1">Next Maintenance Date</label>
+                                        <input type="date" id="next_maintenance_date" name="next_maintenance_date" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Block Reason (conditional) -->
+                            <div id="blockFields" class="mt-6 hidden">
+                                <h4 class="font-medium text-gray-700 mb-2">Block Information</h4>
+                                <div>
+                                    <label for="block_reason" class="block text-sm font-medium text-gray-700 mb-1">Reason for Blocking</label>
+                                    <textarea id="block_reason" name="block_reason" class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3" placeholder="Enter reason for blocking the room"></textarea>
                                 </div>
                             </div>
                             
@@ -684,48 +712,49 @@
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1" for="floorFilter">Floor</label>
-                                    <select id="floorFilter" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <select id="floorFilter" name="floor" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                         <option value="">All Floors</option>
-                                        <option value="1">1st Floor</option>
-                                        <option value="2">2nd Floor</option>
-                                        <option value="3">3rd Floor</option>
-                                        <option value="4">4th Floor</option>
-                                        <option value="5">5th Floor</option>
-                                        <option value="6">6th Floor</option>
+                                        <?php foreach(['B1', 'B2', 'B3', 'B4', 'B5', 'B6'] as $floor): ?>
+                                            <option value="<?= $floor ?>" <?= ($filters['floor'] ?? '') == $floor ? 'selected' : '' ?>>
+                                                <?= $floor ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1" for="roomTypeFilter">Room Type</label>
-                                    <select id="roomTypeFilter" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <select id="roomTypeFilter" name="room_type" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                         <option value="">All Types</option>
-                                        <option value="standard">Standard (6-bed)</option>
-                                        <option value="premium">Premium (4-bed)</option>
-                                        <option value="deluxe">Deluxe (2-bed)</option>
+                                        <option value="standard" <?= ($filters['room_type'] ?? '') == 'standard' ? 'selected' : '' ?>>Standard (6-bed)</option>
+                                        <option value="premium" <?= ($filters['room_type'] ?? '') == 'premium' ? 'selected' : '' ?>>Premium (4-bed)</option>
+                                        <option value="deluxe" <?= ($filters['room_type'] ?? '') == 'deluxe' ? 'selected' : '' ?>>Deluxe (2-bed)</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1" for="statusFilter">Status</label>
-                                    <select id="statusFilter" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <select id="statusFilter" name="status" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                         <option value="">All Statuses</option>
-                                        <option value="available">Available</option>
-                                        <option value="occupied">Occupied</option>
-                                        <option value="maintenance">Under Maintenance</option>
-                                        <option value="reserved">Reserved</option>
+                                        <option value="available" <?= ($filters['status'] ?? '') == 'available' ? 'selected' : '' ?>>Available</option>
+                                        <option value="occupied" <?= ($filters['status'] ?? '') == 'occupied' ? 'selected' : '' ?>>Occupied</option>
+                                        <option value="maintenance" <?= ($filters['status'] ?? '') == 'maintenance' ? 'selected' : '' ?>>Under Maintenance</option>
+                                        <option value="blocked" <?= ($filters['status'] ?? '') == 'blocked' ? 'selected' : '' ?>>Blocked</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1" for="companyFilter">Company</label>
-                                    <select id="companyFilter" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                        <option value="">All Companies</option>
-                                        <option value="sri-paandi">Sri Paandi</option>
-                                        <option value="global-tech">Global Tech</option>
-                                        <option value="eastcoast">East Coast</option>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" for="capacityFilter">Capacity</label>
+                                    <select id="capacityFilter" name="capacity" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">All Capacities</option>
+                                        <?php foreach(range(1, 12) as $capacity): ?>
+                                            <option value="<?= $capacity ?>" <?= ($filters['capacity'] ?? '') == $capacity ? 'selected' : '' ?>>
+                                                <?= $capacity ?> beds
+                                            </option>
+                                        <?php endforeach; ?>
                                      </select>
                                  </div>
                             </div>
                             <div class="flex justify-end mt-4">
-                                <button id="resetFilters" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 mr-2">Reset</button>
-                                <button id="applyFilters" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">Apply Filters</button>
+                                <button id="resetFilters" type="button" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 mr-2">Reset</button>
+                                <button id="applyFilters" type="button" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">Apply Filters</button>
                             </div>
                         </div>
 
@@ -733,70 +762,83 @@
                         <div class="mb-6 mt-4">
                         <div class="relative mb-4">
                                 <input
+                                    id="searchInput"
                                     class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                                    placeholder="Search room, tenant name, ID number..." type="text" />
+                                    placeholder="Search room, tenant name, ID number..." 
+                                    type="text" 
+                                    value="<?= $search ?? '' ?>" />
                                 <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
                         </div>
 
                         <!-- Quick Stats Cards -->
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <!-- Occupancy Rate Card -->
+                                <?php 
+                                    $occupancyRate = 0;
+                                    if ($roomStats['total_capacity'] > 0) {
+                                        $occupancyRate = round(($roomStats['total_occupied'] / $roomStats['total_capacity']) * 100);
+                                    }
+                                ?>
                                 <div class="stats-card p-3 rounded-lg shadow-sm border-l-4 border-green-500">
-                                <div class="flex justify-between items-center">
-                                    <div>
+                                    <div class="flex justify-between items-center">
+                                        <div>
                                             <p class="text-xs text-gray-500">Occupancy Rate</p>
-                                        <p class="text-xl font-bold">59%</p>
+                                            <p class="text-xl font-bold"><?= $occupancyRate ?>%</p>
+                                        </div>
+                                        <div class="text-green-500 text-2xl">
+                                            <i class="fas fa-bed"></i>
+                                        </div>
                                     </div>
-                                    <div class="text-green-500 text-2xl">
-                                        <i class="fas fa-bed"></i>
+                                    <div class="text-xs text-gray-500 mt-2">
+                                        <?= $roomStats['total_occupied'] ?> of <?= $roomStats['total_capacity'] ?> beds occupied
                                     </div>
                                 </div>
-                                <div class="text-xs text-gray-500 mt-2">
-                                    <span class="text-green-600"><i class="fas fa-arrow-up"></i> 3%</span> from last month
-                                </div>
-                            </div>
                                 
+                                <!-- Available Rooms Card -->
                                 <div class="stats-card p-3 rounded-lg shadow-sm border-l-4 border-blue-500">
-                                <div class="flex justify-between items-center">
-                                    <div>
+                                    <div class="flex justify-between items-center">
+                                        <div>
                                             <p class="text-xs text-gray-500">Available Rooms</p>
-                                        <p class="text-xl font-bold">141</p>
+                                            <p class="text-xl font-bold"><?= $roomStats['available_count'] ?></p>
+                                        </div>
+                                        <div class="text-blue-500 text-2xl">
+                                            <i class="fas fa-door-open"></i>
+                                        </div>
                                     </div>
-                                    <div class="text-blue-500 text-2xl">
-                                        <i class="fas fa-door-open"></i>
+                                    <div class="text-xs text-gray-500 mt-2">
+                                        <?= count($rooms) ?> total rooms in database
                                     </div>
                                 </div>
-                                <div class="text-xs text-gray-500 mt-2">
-                                    <span class="text-red-600"><i class="fas fa-arrow-down"></i> 5%</span> from last month
-                                </div>
-                            </div>
                                 
+                                <!-- Maintenance Card -->
                                 <div class="stats-card p-3 rounded-lg shadow-sm border-l-4 border-yellow-500">
-                                <div class="flex justify-between items-center">
-                                    <div>
+                                    <div class="flex justify-between items-center">
+                                        <div>
                                             <p class="text-xs text-gray-500">Maintenance</p>
-                                        <p class="text-xl font-bold">62</p>
+                                            <p class="text-xl font-bold"><?= $roomStats['maintenance_count'] ?></p>
+                                        </div>
+                                        <div class="text-yellow-500 text-2xl">
+                                            <i class="fas fa-tools"></i>
+                                        </div>
                                     </div>
-                                    <div class="text-yellow-500 text-2xl">
-                                        <i class="fas fa-tools"></i>
+                                    <div class="text-xs text-gray-500 mt-2">
+                                        <?= $roomStats['blocked_count'] ?> rooms currently blocked
                                     </div>
                                 </div>
-                                <div class="text-xs text-gray-500 mt-2">
-                                    <span class="text-yellow-600"><i class="fas fa-arrow-up"></i> 2%</span> from last month
-                                </div>
-                            </div>
                                 
+                                <!-- Total Occupants Card -->
                                 <div class="stats-card p-3 rounded-lg shadow-sm border-l-4 border-purple-500">
-                                <div class="flex justify-between items-center">
-                                    <div>
+                                    <div class="flex justify-between items-center">
+                                        <div>
                                             <p class="text-xs text-gray-500">Total Occupants</p>
-                                        <p class="text-xl font-bold">1,458</p>
+                                            <p class="text-xl font-bold"><?= $roomStats['total_occupied'] ?></p>
+                                        </div>
+                                        <div class="text-purple-500 text-2xl">
+                                            <i class="fas fa-users"></i>
+                                        </div>
                                     </div>
-                                    <div class="text-purple-500 text-2xl">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                </div>
-                                <div class="text-xs text-gray-500 mt-2">
-                                    <span class="text-green-600"><i class="fas fa-arrow-up"></i> 7%</span> from last month
+                                    <div class="text-xs text-gray-500 mt-2">
+                                        <?= $roomStats['total_capacity'] - $roomStats['total_occupied'] ?> available bedspaces
                                     </div>
                                 </div>
                             </div>
@@ -834,844 +876,206 @@
                                 </div>
                             </div>
 
-                            <!-- Room 305 (Available) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">1.</div>
-                                <div class="w-[18%] pl-4">
-                                            <span>7-03-05</span>
-                                        </div>
-                                        <div class="w-[22%]">
-                                            <span class="status status-available">
+                            <!-- Empty State (No Rooms Found) -->
+                            <?php if (empty($rooms)): ?>
+                            <div class="bg-white px-4 py-8 text-center border-b border-gray-200">
+                                <div class="text-gray-400 mb-2"><i class="fas fa-bed fa-2x"></i></div>
+                                <h3 class="text-lg font-medium text-gray-900">No rooms found</h3>
+                                <p class="text-gray-500 mt-1">Try adjusting your search or filter criteria</p>
+                                <button id="clearFiltersBtn" class="mt-3 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 inline-flex items-center">
+                                    <i class="fas fa-undo mr-2"></i> Clear all filters
+                                </button>
+                            </div>
+                            <?php else: ?>
+                            
+                            <!-- Dynamic Room Listing -->
+                            <?php $counter = 1; foreach ($rooms as $room): ?>
+                                <!-- Room <?= $room['room_number'] ?> -->
+                                <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
+                                    <div class="w-16 px-3"><?= $counter ?>.</div>
+                                    <div class="w-[18%] pl-4">
+                                        <span><?= esc($room['room_number']) ?></span>
+                                    </div>
+                                    <div class="w-[22%]">
+                                        <?php
+                                            $statusClass = '';
+                                            switch($room['status']) {
+                                                case 'available':
+                                                    $statusClass = 'status-available';
+                                                    break;
+                                                case 'occupied':
+                                                    $statusClass = 'status-occupied';
+                                                    break;
+                                                case 'maintenance':
+                                                    $statusClass = 'status-maintenance';
+                                                    break;
+                                                case 'blocked':
+                                                    $statusClass = 'status-blocked';
+                                                    break;
+                                            }
+                                        ?>
+                                        <span class="status <?= $statusClass ?>">
+                                            <?php if ($room['status'] == 'available'): ?>
                                                 Available
-                                            </span>
-                                        </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                        <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="305">
-                                        <i class="fas fa-info-circle"></i>
-                                            </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="305" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                            </button>
-                                            <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="305">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-                                        <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Assign Occupants</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Mark as Unavailable</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                        <div class="staff-list pl-20" id="staff-305">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Right side - Empty Beds (moved to left) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                        </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                    </div>
-                                </div>
-
-                                            <!-- Left side - Room Info (moved to right) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 601 (Occupied) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">2.</div>
-                                <div class="w-[18%] pl-4">
-                                            <span>7-06-01</span>
-                                        </div>
-                                        <div class="w-[22%]">
-                                            <span class="status status-occupied">
+                                            <?php elseif ($room['status'] == 'occupied'): ?>
                                                 Occupied
-                                            </span>
-                                        </div>
-                                <div class="w-[15%]">Sri Paandi</div>
-                                <div class="w-[15%]">10/12/2023 10:00 AM</div>
-                                <div class="w-[15%]">4/6</div>
-                                        <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="601">
-                                        <i class="fas fa-info-circle"></i>
+                                            <?php elseif ($room['status'] == 'maintenance'): ?>
+                                                Under Maintenance
+                                            <?php elseif ($room['status'] == 'blocked'): ?>
+                                                Blocked
+                                            <?php endif; ?>
+                                        </span>
+                                    </div>
+                                    <div class="w-[15%]">
+                                        <?php if (!empty($room['room_type'])): ?>
+                                            <?= ucfirst(esc($room['room_type'])) ?>
+                                        <?php else: ?>
+                                            Standard
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="w-[15%]"><?= $room['capacity'] ?></div>
+                                    <div class="w-[15%]">
+                                        <?php if (isset($room['occupied_count'])): ?>
+                                            <?= $room['occupied_count'] ?>/<?= $room['capacity'] ?>
+                                        <?php else: ?>
+                                            0/<?= $room['capacity'] ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="w-[10%] flex justify-end items-center space-x-2">
+                                        <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" 
+                                                data-room-id="<?= $room['id'] ?>" 
+                                                data-room-number="<?= esc($room['room_number']) ?>">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" 
+                                                data-room-id="<?= $room['id'] ?>" 
+                                                aria-expanded="false">
+                                            <i class="fas fa-chevron-down text-xs"></i>
+                                        </button>
+                                        <div class="relative">
+                                            <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" 
+                                                    data-room-id="<?= $room['id'] ?>">
+                                                <i class="fas fa-ellipsis-h"></i>
                                             </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="601" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                            </button>
-                                            <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="601">
-                                            <i class="fas fa-ellipsis-h"></i>
+                                            <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
+                                                <button class="edit-room-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                        data-room-id="<?= $room['id'] ?>">
+                                                    Edit Room
                                                 </button>
-                                        <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Tenants</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Vacate Room</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                         <div class="staff-list pl-20" id="staff-601">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Right side - Occupant List (moved to left) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded">
-                                                    <p class="font-medium">Pandey Bijaya</p>
-                                                    <p class="text-xs text-gray-500">ID: AE872917</p>
-                                         </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded">
-                                                    <p class="font-medium">Suresh Vika</p>
-                                                    <p class="text-xs text-gray-500">ID: AU827392</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded">
-                                                    <p class="font-medium">Kamal Bahadur</p>
-                                                    <p class="text-xs text-gray-500">ID: AU918273</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded">
-                                                    <p class="font-medium">Jalaluden Ahmed</p>
-                                                    <p class="text-xs text-gray-500">ID: AE286381</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                     </div>
-                                </div>
-
-                                            <!-- Left side - Room Info (moved to right) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
+                                                <?php if ($room['status'] == 'available'): ?>
+                                                    <button class="assign-occupant-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        Assign Occupant
+                                                    </button>
+                                                    <button class="schedule-maintenance-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        Schedule Maintenance
+                                                    </button>
+                                                    <button class="block-room-btn block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        Block Room
+                                                    </button>
+                                                <?php elseif ($room['status'] == 'occupied'): ?>
+                                                    <button class="view-occupants-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        View Occupants
+                                                    </button>
+                                                    <button class="schedule-maintenance-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        Schedule Maintenance
+                                                    </button>
+                                                <?php elseif ($room['status'] == 'maintenance'): ?>
+                                                    <button class="view-maintenance-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        View Maintenance Log
+                                                    </button>
+                                                    <button class="complete-maintenance-btn block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        Mark as Available
+                                                    </button>
+                                                <?php elseif ($room['status'] == 'blocked'): ?>
+                                                    <button class="unblock-room-btn block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100" 
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        Unblock Room
+                                                    </button>
+                                                <?php endif; ?>
+                                                <button class="delete-room-btn block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100" 
+                                                        data-room-id="<?= $room['id'] ?>">
+                                                    Delete Room
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
+                                    <div class="staff-list pl-20" id="staff-<?= $room['id'] ?>" style="display: none;">
+                                        <div class="p-4">
+                                            <div class="flex justify-between">
+                                                <!-- Beds/Occupants Grid (left side) -->
+                                                <div class="grid grid-cols-3 gap-2 flex-1 mr-8 room-occupants-container" data-room-id="<?= $room['id'] ?>">
+                                                    <!-- Will be populated by JavaScript -->
+                                                    <div class="text-sm p-2 bg-gray-200 rounded text-center">
+                                                        <p class="text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>Loading...</p>
+                                                    </div>
+                                                </div>
 
-                            <!-- Room 205 (Under Maintenance) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">3.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-02-05</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-maintenance">
-                                        Under Maintenance
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="205">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="205" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="205">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Maintenance Log</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Inspection</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Update Status</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-green-600 hover:bg-gray-100">Mark as Available</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-205">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
+                                                <!-- Room Info (right side) -->
+                                                <div class="flex flex-col space-y-2 min-w-[200px]">
+                                                    <div class="flex items-center space-x-4">
+                                                        <span class="text-gray-600 text-sm">Room Type:</span>
+                                                        <span class="text-sm">
+                                                            <?php if (!empty($room['room_type'])): ?>
+                                                                <?= ucfirst(esc($room['room_type'])) ?> (<?= $room['capacity'] ?>-bed)
+                                                            <?php else: ?>
+                                                                Standard (<?= $room['capacity'] ?>-bed)
+                                                            <?php endif; ?>
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex items-center space-x-4">
+                                                        <span class="text-gray-600 text-sm">Floor:</span>
+                                                        <span class="text-sm"><?= $room['floor'] ?></span>
+                                                    </div>
+                                                    <div class="flex items-center space-x-4">
+                                                        <span class="text-gray-600 text-sm">Status:</span>
+                                                        <?php if ($room['status'] == 'available'): ?>
+                                                            <span class="text-green-600 text-sm">
+                                                                <i class="fas fa-check-circle"></i> Available
+                                                            </span>
+                                                        <?php elseif ($room['status'] == 'occupied'): ?>
+                                                            <span class="text-blue-600 text-sm">
+                                                                <i class="fas fa-users"></i> Occupied
+                                                            </span>
+                                                        <?php elseif ($room['status'] == 'maintenance'): ?>
+                                                            <span class="text-yellow-600 text-sm">
+                                                                <i class="fas fa-tools"></i> Under Maintenance
+                                                            </span>
+                                                        <?php elseif ($room['status'] == 'blocked'): ?>
+                                                            <span class="text-red-600 text-sm">
+                                                                <i class="fas fa-ban"></i> Blocked
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <button class="view-room-details-btn w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center"
+                                                            data-room-id="<?= $room['id'] ?>">
+                                                        <span>View Details</span>
+                                                        <i class="fas fa-chevron-right ml-2 text-xs"></i>
+                                                    </button>
                                                 </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-yellow-600 text-sm">
-                                                        <i class="fas fa-tools"></i> Under maintenance
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-yellow-600 text-sm">
-                                                        <i class="fas fa-tools"></i> Under Maintenance
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Room 407 (Available) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">4.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-04-07</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-available">
-                                        Available
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="407">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="407" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="407">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Assign Occupant</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Mark as Unavailable</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-407">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 318 (Available) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">5.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-03-18</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-available">
-                                        Available
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="318">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="318" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="318">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Assign Occupant</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Mark as Unavailable</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-318">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 419 (Under Maintenance) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">6.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-04-19</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-maintenance">
-                                        Under Maintenance
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="419">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="419" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="419">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Maintenance Log</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Inspection</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Update Status</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-green-600 hover:bg-gray-100">Mark as Available</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-419">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 208 (Available) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">7.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-02-08</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-available">
-                                        Available
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="208">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="208" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="208">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 bottom-full mb-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Assign Occupant</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Mark as Unavailable</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-208">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 510 (Available) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">8.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-05-10</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-available">
-                                        Available
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="510">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="510" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="510">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 bottom-full mb-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Assign Occupant</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Mark as Unavailable</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-510">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 610 (Available) -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
-                                <div class="w-16 px-3">8.</div>
-                                <div class="w-[18%] pl-4">
-                                    <span>7-06-10</span>
-                                </div>
-                                <div class="w-[22%]">
-                                    <span class="status status-available">
-                                        Available
-                                    </span>
-                                </div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[15%]">N/A</div>
-                                <div class="w-[10%] flex justify-end items-center space-x-2">
-                                    <button class="icon-button show-room-details w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="610">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="icon-button toggle-staff w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="610" aria-expanded="false">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </button>
-                                    <div class="relative">
-                                        <button class="icon-button toggle-actions w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" data-room="610">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="action-menu absolute right-0 bottom-full mb-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Room</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Assign Occupant</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule Maintenance</a>
-                                            <a href="<?= base_url('#') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Mark as Unavailable</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white px-0 border-b border-gray-200 staff-list-row">
-                                <div class="staff-list pl-20" id="staff-610">
-                                    <div class="p-4">
-                                        <div class="flex justify-between">
-                                            <!-- Empty Beds Grid (left side) -->
-                                            <div class="grid grid-cols-3 gap-2 flex-1 mr-8">
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                                <div class="text-sm p-2 bg-gray-200 rounded border border-dashed border-gray-300">
-                                                    <p class="text-gray-500"><i class="fas fa-bed mr-2"></i>Empty Bed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Room Info (right side) -->
-                                            <div class="flex flex-col space-y-2 min-w-[200px]">
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Type:</span>
-                                                    <span class="text-sm">Standard (6-bed)</span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Maintenance:</span>
-                                                    <span class="text-green-600 text-sm">
-                                                        <i class="fas fa-check"></i> No issues
-                                                    </span>
-                                                </div>
-                                                <div class="flex items-center space-x-4">
-                                                    <span class="text-gray-600 text-sm">Room Status:</span>
-                                                    <span class="text-orange-600 text-sm">
-                                                        <i class="fas fa-users"></i> Available
-                                                    </span>
-                                                </div>
-                                                <button class="w-fit px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md text-sm hover:bg-blue-100 transition-colors duration-200 flex items-center">
-                                                    <span>View Details</span>
-                                                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php $counter++; endforeach; ?>
+                            <?php endif; ?>
                         </div>
+                        
                         <!-- Pagination controls -->
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="text-sm text-gray-600 showing-text">
-                                Showing 1 - 10 of 496 rooms
-                            </div>
-                            
-                            <div class="flex items-center space-x-1">
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50" disabled>
-                                    <i class="fas fa-chevron-left text-xs"></i>
-                                </button>
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-purple-500 text-white">
-                                    1
-                                </button>
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                                    2
-                                </button>
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                                    3
-                                </button>
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                                    4
-                                </button>
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                                    5
-                                </button>
-                                <button class="pagination-button w-8 h-8 flex items-center justify-center rounded-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
-                                    <i class="fas fa-chevron-right text-xs"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="flex items-center space-x-2">
-                                <span class="text-sm text-gray-600">Records per page</span>
-                                <select class="border border-gray-300 rounded-lg p-1 text-sm">
-                                    <option>10</option>
-                                    <option>25</option>
-                                    <option>50</option>
-                                    <option>100</option>
-                                </select>
-                            </div>
-                        </div>
+                        <?= $pager->links() ?>                 
                     </div>
-
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <!-- Footer -->
@@ -1682,6 +1086,11 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
+<script>
+    // Define base URL for AJAX requests
+    const baseUrl = '<?= base_url() ?>';
+</script>
+<script src="<?= base_url('js/manage-room.js') ?>"></script>
 <script src="<?= base_url('js/main.js') ?>" defer></script>
 <script src="<?= base_url('js/darkmode.js') ?>" defer></script>
 <script src="<?= base_url('js/sidebar.js') ?>" defer></script>
