@@ -542,11 +542,9 @@
         </div>
     </div>
 </div>
-
-    <!-- Info Tables -->
-
-    <!-- Recent Issue and Clearance -->
-    <div class="card basic-card bg-white shadow-md rounded-lg p-6 mb-6">
+<!-- Info Tables -->
+<!-- Recent Issue and Clearance -->
+<div class="card basic-card bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold text-gray-800">Recent Issue & Clearance</h2>
             <div class="flex space-x-2">
@@ -640,10 +638,9 @@
                                     View All Records
                                 </button>
                             </div>
-    </div>
-                      
-    <!-- Admin & Staff Activity Log -->
-    <div class="card basic-card bg-white shadow-md rounded-lg p-6 mb-6">
+</div>                    
+<!-- Admin & Staff Activity Log -->
+<div class="card basic-card bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold text-gray-800">Admin & Staff Activity Log</h2>
             <div class="flex items-center">
@@ -774,10 +771,9 @@
                 View All Staff Activities
             </button>
         </div>
-    </div>
-                      
-    <!-- Room Category Breakdown -->
-    <div class="card basic-card bg-white shadow-md rounded-lg p-6 mb-6">
+</div>                 
+<!-- Room Category Breakdown -->
+<div class="card basic-card bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold text-gray-800">Room Category Breakdown</h2>
             <div class="flex items-center space-x-2">
@@ -1145,8 +1141,7 @@
                 <span class="text-xs text-gray-500">Showing all 6 room types</span>
             </div>
         </div>
-    </div>
-
+</div>
 <!-- Activity Modal -->
 <div id="activityModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
     <div class="rounded-lg shadow-xl max-w-6xl w-full mx-4 overflow-hidden max-h-[90vh] flex bg-white activity-modal-bg">
@@ -1920,6 +1915,7 @@
 <script src="<?= base_url('js/button-logic.js') ?>"></script>
 <script src="<?= base_url('js/card-slider.js') ?>"></script>
 <script src="<?= base_url('js/modals.js') ?>"></script>
+<script src="<?= base_url('js/notifications.js') ?>" defer></script>
 <script src="<?= base_url('js/record-hover-effects.js') ?>"></script>
 <script src="<?= base_url('js/index/no-results-message.js') ?>"></script>
 <script src="<?= base_url('js/index/activity-details-panel.js') ?>"></script>

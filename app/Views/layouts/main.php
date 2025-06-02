@@ -119,7 +119,7 @@
                                 <i class="fas fa-moon"></i>
                             </button>
                             <div class="relative ml-4">
-                                <button class="text-gray-500 has-notifications" id="notificationToggle">
+                                <button class="text-gray-500" id="notificationToggle">
                                     <i class="fas fa-bell"></i>
                                 </button>
                                 <div class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg" id="notificationPanel">
@@ -127,7 +127,7 @@
                                         <h3 class="text-sm font-semibold text-gray-700">Notifications</h3>
                                     </div>
                                     <ul class="p-2 max-h-64 overflow-y-auto">
-                                        <!-- Notification items -->
+                                        <!-- Notification items will be populated by JavaScript -->
                                     </ul>
                                     <div class="p-2 border-t border-gray-200">
                                         <a href="#" class="text-xs text-blue-500 hover:text-blue-700 font-medium block text-center" id="viewAllNotificationsBtn">View all notifications</a>
