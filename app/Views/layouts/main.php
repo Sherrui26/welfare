@@ -108,7 +108,7 @@
                         <span class="text-gray-500"><?= date('M d, Y') ?></span>
                     </div>
                     <div class="flex items-center">
-                        <span class="text-gray-500 mr-4"><?= date('h:i A') ?></span>
+                        <span class="text-gray-500 mr-4"><?= date('h:i A', time() + (8 * 3600)) ?></span>
                         <div class="flex items-center">
                             <span class="text-gray-500 mr-2">English</span>
                             <img alt="User avatar" class="rounded-full" height="30"
