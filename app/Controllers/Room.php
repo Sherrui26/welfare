@@ -7,48 +7,12 @@ class Room extends BaseController
     protected $roomModel;
     protected $occupantModel;
     protected $maintenanceModel;
-    protected $activityModel;
-    
-    /**
-     * Helper method to get icon for room status
-     */
-    private function getStatusIcon($status)
-    {
-        switch($status) {
-            case 'available':
-                return 'fa-check-circle';
-            case 'maintenance':
-                return 'fa-tools';
-            case 'blocked':
-                return 'fa-ban';
-            default:
-                return 'fa-door-open';
-        }
-    }
-    
-    /**
-     * Helper method to get color for room status
-     */
-    private function getStatusColor($status)
-    {
-        switch($status) {
-            case 'available':
-                return 'green';
-            case 'maintenance':
-                return 'yellow';
-            case 'blocked':
-                return 'red';
-            default:
-                return 'blue';
-        }
-    }
     
     public function __construct()
     {
         $this->roomModel = model('RoomModel');
         $this->occupantModel = model('RoomOccupantModel');
         $this->maintenanceModel = model('RoomMaintenanceLogModel');
-        $this->activityModel = model('ActivityModel');
     }
     
     public function index()
@@ -158,24 +122,10 @@ class Room extends BaseController
             
             // Attempt to create room
             if ($this->roomModel->insert($roomData)) {
-                $roomId = $this->roomModel->getInsertID();
-                
-                // Log activity
-                $activityData = [
-                    'activity_type' => 'room-created',
-                    'room_number' => $roomData['room_number'],
-                    'description' => "New room {$roomData['room_number']} created on floor {$roomData['floor']} with {$roomData['capacity']} beds",
-                    'icon' => 'fa-door-open',
-                    'color' => 'blue',
-                    'timestamp' => date('Y-m-d H:i:s'),
-                    'user_id' => session()->get('user_id') ?? 1
-                ];
-                $this->activityModel->insert($activityData);
-                
                 return $this->response->setJSON([
                     'success' => true,
                     'message' => 'Room created successfully',
-                    'room_id' => $roomId
+                    'room_id' => $this->roomModel->getInsertID()
                 ]);
             } else {
                 return $this->response->setJSON([
@@ -241,20 +191,6 @@ class Room extends BaseController
             
             // Attempt to update room
             if ($this->roomModel->update($id, $roomData)) {
-                // Log activity for status change
-                if ($room['status'] !== $roomData['status']) {
-                    $activityData = [
-                        'activity_type' => 'room-status-updated',
-                        'room_number' => $roomData['room_number'],
-                        'description' => "Room {$roomData['room_number']} status changed from {$room['status']} to {$roomData['status']}",
-                        'icon' => $this->getStatusIcon($roomData['status']),
-                        'color' => $this->getStatusColor($roomData['status']),
-                        'timestamp' => date('Y-m-d H:i:s'),
-                        'user_id' => session()->get('user_id') ?? 1
-                    ];
-                    $this->activityModel->insert($activityData);
-                }
-                
                 return $this->response->setJSON([
                     'success' => true,
                     'message' => 'Room updated successfully'
@@ -304,18 +240,6 @@ class Room extends BaseController
         
         // Delete room
         if ($this->roomModel->delete($id)) {
-            // Log activity
-            $activityData = [
-                'activity_type' => 'room-deleted',
-                'room_number' => $room['room_number'],
-                'description' => "Room {$room['room_number']} on floor {$room['floor']} has been deleted",
-                'icon' => 'fa-trash',
-                'color' => 'red',
-                'timestamp' => date('Y-m-d H:i:s'),
-                'user_id' => session()->get('user_id') ?? 1
-            ];
-            $this->activityModel->insert($activityData);
-            
             return $this->response->setJSON([
                 'success' => true,
                 'message' => 'Room deleted successfully'
@@ -346,25 +270,6 @@ class Room extends BaseController
         ];
         
         $result = $this->occupantModel->assignOccupant($occupantData);
-        
-        // If occupant was successfully assigned, log the activity
-        if (isset($result['success']) && $result['success']) {
-            // Get room details for the activity log
-            $room = $this->roomModel->find($occupantData['room_id']);
-            
-            $activityData = [
-                'activity_type' => 'check-in',
-                'room_number' => $room['room_number'] ?? 'Unknown',
-                'tenant_id' => $occupantData['occupant_id'],
-                'description' => "{$occupantData['occupant_name']} ({$occupantData['occupant_type']}) assigned to Room {$room['room_number']}",
-                'icon' => 'fa-user-plus',
-                'color' => 'green',
-                'timestamp' => date('Y-m-d H:i:s'),
-                'user_id' => session()->get('user_id') ?? 1
-            ];
-            $this->activityModel->insert($activityData);
-        }
-        
         return $this->response->setJSON($result);
     }
     
@@ -377,28 +282,7 @@ class Room extends BaseController
             ]);
         }
         
-        // Get occupant details before removal for the activity log
-        $occupant = $this->occupantModel->find($occupantId);
         $result = $this->occupantModel->removeOccupant($occupantId);
-        
-        // If occupant was successfully removed, log the activity
-        if (isset($result['success']) && $result['success'] && $occupant) {
-            // Get room details
-            $room = $this->roomModel->find($occupant['room_id']);
-            
-            $activityData = [
-                'activity_type' => 'check-out',
-                'room_number' => $room['room_number'] ?? 'Unknown',
-                'tenant_id' => $occupant['occupant_id'],
-                'description' => "{$occupant['occupant_name']} checked out from Room {$room['room_number']}",
-                'icon' => 'fa-user-minus',
-                'color' => 'red',
-                'timestamp' => date('Y-m-d H:i:s'),
-                'user_id' => session()->get('user_id') ?? 1
-            ];
-            $this->activityModel->insert($activityData);
-        }
-        
         return $this->response->setJSON($result);
     }
     
@@ -419,23 +303,6 @@ class Room extends BaseController
         $result = $this->maintenanceModel->scheduleMaintenance(
             $roomId, $maintenanceDate, $maintenanceType, $notes
         );
-        
-        // If maintenance was successfully scheduled, log the activity
-        if (isset($result['success']) && $result['success']) {
-            // Get room details
-            $room = $this->roomModel->find($roomId);
-            
-            $activityData = [
-                'activity_type' => 'maintenance',
-                'room_number' => $room['room_number'] ?? 'Unknown',
-                'description' => "Maintenance scheduled for Room {$room['room_number']} on " . date('M j, Y', strtotime($maintenanceDate)) . " ({$maintenanceType})",
-                'icon' => 'fa-tools',
-                'color' => 'yellow',
-                'timestamp' => date('Y-m-d H:i:s'),
-                'user_id' => session()->get('user_id') ?? 1
-            ];
-            $this->activityModel->insert($activityData);
-        }
         
         return $this->response->setJSON($result);
     }

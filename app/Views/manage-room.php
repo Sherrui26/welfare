@@ -103,7 +103,7 @@
         </div>
 </div>
 <!-- Add New Room Modal -->
-<div id="addRoomModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center" style="display: none;">
+<div id="addRoomModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 overflow-hidden max-h-[90vh]">
             <div class="border-b p-4 bg-gray-50">
                 <div class="modal-header-with-back">
@@ -126,11 +126,11 @@
                                 <img id="roomImagePreview" src="https://placehold.co/600x400?text=Room+Image" alt="Room Preview" class="object-cover w-full h-full" />
                             </div>
                             <div class="mt-4">
-                                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Initial Status</label>
-                                <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                <label for="roomStatus" class="block text-sm font-medium text-gray-700 mb-1">Initial Status</label>
+                                <select id="roomStatus" name="roomStatus" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
                                     <option value="available" selected>Available</option>
                                     <option value="maintenance">Under Maintenance</option>
-                                    <option value="blocked">Blocked</option>
+                                    <option value="unavailable">Unavailable</option>
                                 </select>
                             </div>
                             
@@ -150,24 +150,24 @@
                         <div class="md:col-span-2">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="room_number" class="block text-sm font-medium text-gray-700 mb-1">Room Number</label>
-                                    <input type="text" id="room_number" name="room_number" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. B1-01" required>
+                                    <label for="roomNumber" class="block text-sm font-medium text-gray-700 mb-1">Room Number</label>
+                                    <input type="text" id="roomNumber" name="roomNumber" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. 11" required>
                                 </div>
                                 <div>
-                                    <label for="floor" class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
-                                    <select id="floor" name="floor" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                    <label for="floorNumber" class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
+                                    <select id="floorNumber" name="floorNumber" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
                                         <option value="" disabled selected>Select floor</option>
-                                        <option value="B1">B1</option>
-                                        <option value="B2">B2</option>
-                                        <option value="B3">B3</option>
-                                        <option value="B4">B4</option>
-                                        <option value="B5">B5</option>
-                                        <option value="B6">B6</option>
+                                        <option value="1">B1 Floor</option>
+                                        <option value="2">B2 Floor</option>
+                                        <option value="3">B3 Floor</option>
+                                        <option value="4">B4 Floor</option>
+                                        <option value="5">B5 Floor</option>
+                                        <option value="6">B6 Floor</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="capacity" class="block text-sm font-medium text-gray-700 mb-1">Total Bedspaces</label>
-                                    <input type="number" id="capacity" name="capacity" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. 6" value="6" min="1" max="12" required>
+                                    <label for="totalBedspaces" class="block text-sm font-medium text-gray-700 mb-1">Total Bedspaces</label>
+                                    <input type="number" id="totalBedspaces" name="totalBedspaces" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="e.g. 6" value="6" min="1" max="12" required>
                                 </div>
                                 <div>
                                     <label for="roomArea" class="block text-sm font-medium text-gray-700 mb-1">Room Area (m²)</label>
@@ -183,46 +183,18 @@
                                 </div>
                             </div>
                             
-                            <!-- Room Type -->
+                            <!-- Bathroom Type -->
                             <div class="mt-6">
-                                <h4 class="font-medium text-gray-700 mb-2">Room Type</h4>
+                                <h4 class="font-medium text-gray-700 mb-2">Bathroom Type</h4>
                                 <div class="flex items-center space-x-4 mt-2">
                                     <label class="inline-flex items-center">
-                                        <input type="radio" name="room_type" value="standard" class="form-radio" checked>
-                                        <span class="ml-2">Standard (6-bed)</span>
+                                        <input type="radio" name="bathroomType" value="attached" class="form-radio" checked>
+                                        <span class="ml-2">Attached Bathroom</span>
                                     </label>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" name="room_type" value="premium" class="form-radio">
-                                        <span class="ml-2">Premium (4-bed)</span>
+                                        <input type="radio" name="bathroomType" value="common" class="form-radio">
+                                        <span class="ml-2">Common Toilet</span>
                                     </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" name="room_type" value="deluxe" class="form-radio">
-                                        <span class="ml-2">Deluxe (2-bed)</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <!-- Maintenance Notes (conditional) -->
-                            <div id="maintenanceFields" class="mt-6 hidden">
-                                <h4 class="font-medium text-gray-700 mb-2">Maintenance Information</h4>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label for="maintenance_note" class="block text-sm font-medium text-gray-700 mb-1">Maintenance Notes</label>
-                                        <textarea id="maintenance_note" name="maintenance_note" class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3" placeholder="Enter maintenance details"></textarea>
-                                    </div>
-                                    <div>
-                                        <label for="next_maintenance_date" class="block text-sm font-medium text-gray-700 mb-1">Next Maintenance Date</label>
-                                        <input type="date" id="next_maintenance_date" name="next_maintenance_date" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Block Reason (conditional) -->
-                            <div id="blockFields" class="mt-6 hidden">
-                                <h4 class="font-medium text-gray-700 mb-2">Block Information</h4>
-                                <div>
-                                    <label for="block_reason" class="block text-sm font-medium text-gray-700 mb-1">Reason for Blocking</label>
-                                    <textarea id="block_reason" name="block_reason" class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3" placeholder="Enter reason for blocking the room"></textarea>
                                 </div>
                             </div>
                             
@@ -714,9 +686,9 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1" for="floorFilter">Floor</label>
                                     <select id="floorFilter" name="floor" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                         <option value="">All Floors</option>
-                                        <?php foreach(['B1', 'B2', 'B3', 'B4', 'B5', 'B6'] as $floor): ?>
+                                        <?php foreach(range(1, 20) as $floor): ?>
                                             <option value="<?= $floor ?>" <?= ($filters['floor'] ?? '') == $floor ? 'selected' : '' ?>>
-                                                <?= $floor ?>
+                                                Floor <?= $floor ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>

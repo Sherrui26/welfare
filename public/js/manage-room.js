@@ -3,42 +3,20 @@
  * Handles AJAX interactions, modals, and dynamic UI updates for the room management view
  */
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded - initializing room management scripts');
+    // Initialize tooltips, action menus, and other UI components
+    initializeUI();
     
-    try {
-        // Initialize tooltips, action menus, and other UI components
-        initializeUI();
-        
-        // Setup event listeners for room actions (edit, delete, view)
-        setupRoomActions();
-        
-        // Setup event listeners for modals
-        setupModalListeners();
-        
-        // Setup event listeners for form submissions
-        setupFormSubmissions();
-        
-        // Setup event listeners for filtering and pagination
-        setupFiltering();
-        
-        // Verify Add Room button is properly set up
-        const addRoomButton = document.getElementById('addRoomButton');
-        if (addRoomButton) {
-            console.log('Add Room button found and initialized');
-        } else {
-            console.error('Add Room button not found in DOM');
-        }
-        
-        // Verify Add Room modal exists
-        const addRoomModal = document.getElementById('addRoomModal');
-        if (addRoomModal) {
-            console.log('Add Room modal found in DOM');
-        } else {
-            console.error('Add Room modal not found in DOM');
-        }
-    } catch (error) {
-        console.error('Error initializing room management scripts:', error);
-    }
+    // Setup event listeners for room actions (edit, delete, view)
+    setupRoomActions();
+    
+    // Setup event listeners for modals
+    setupModalListeners();
+    
+    // Setup event listeners for form submissions
+    setupFormSubmissions();
+    
+    // Setup event listeners for filtering and pagination
+    setupFiltering();
 });
 
 /**
@@ -141,14 +119,12 @@ function setupRoomActions() {
  */
 function setupModalListeners() {
     // Add Room Modal
-    const addRoomButton = document.getElementById('addRoomButton');
-    if (addRoomButton) {
-        addRoomButton.addEventListener('click', function() {
+    const addRoomBtn = document.getElementById('addRoomBtn');
+    if (addRoomBtn) {
+        addRoomBtn.addEventListener('click', function() {
             const modal = document.getElementById('addRoomModal');
             if (modal) {
                 modal.classList.remove('hidden');
-                modal.style.display = 'flex';
-                console.log('Opening Add Room modal');
                 
                 // Reset form
                 const form = modal.querySelector('form');
@@ -157,20 +133,7 @@ function setupModalListeners() {
         });
     }
     
-    // Close Add Room Modal
-    const closeAddRoomModal = document.getElementById('closeAddRoomModal');
-    if (closeAddRoomModal) {
-        closeAddRoomModal.addEventListener('click', function() {
-            const modal = document.getElementById('addRoomModal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-                console.log('Closing Add Room modal');
-            }
-        });
-    }
-    
-    // Close other modals with close-modal class
+    // Close modals
     document.querySelectorAll('.close-modal').forEach(button => {
         button.addEventListener('click', function() {
             const modal = this.closest('.modal');
@@ -179,12 +142,10 @@ function setupModalListeners() {
     });
     
     // Close modals when clicking outside the content
-    document.querySelectorAll('.modal, [id$="Modal"]').forEach(modal => {
+    document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.add('hidden');
-                this.style.display = 'none';
-                console.log('Closing modal by clicking outside');
             }
         });
     });
@@ -197,34 +158,8 @@ function setupFormSubmissions() {
     // Add Room Form
     const addRoomForm = document.getElementById('addRoomForm');
     if (addRoomForm) {
-        console.log('Add Room Form found, setting up listeners');
-        
-        // Setup status change listener to show/hide conditional fields
-        const statusSelect = document.getElementById('status');
-        if (statusSelect) {
-            statusSelect.addEventListener('change', function() {
-                const maintenanceFields = document.getElementById('maintenanceFields');
-                const blockFields = document.getElementById('blockFields');
-                
-                // Hide all conditional fields first
-                maintenanceFields.classList.add('hidden');
-                blockFields.classList.add('hidden');
-                
-                // Show fields based on selected status
-                switch(this.value) {
-                    case 'maintenance':
-                        maintenanceFields.classList.remove('hidden');
-                        break;
-                    case 'blocked':
-                        blockFields.classList.remove('hidden');
-                        break;
-                }
-            });
-        }
-        
         addRoomForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log('Add Room form submitted');
             
             const formData = new FormData(this);
             const url = `${baseUrl}/room/create`;
@@ -239,18 +174,13 @@ function setupFormSubmissions() {
             .then(response => response.json())
             .then(data => {
                 showLoading(false);
-                console.log('Response received:', data);
                 
                 if (data.success) {
                     // Show success message
                     showAlert('success', data.message);
                     
                     // Close modal
-                    const modal = document.getElementById('addRoomModal');
-                    if (modal) {
-                        modal.classList.add('hidden');
-                        modal.style.display = 'none';
-                    }
+                    document.getElementById('addRoomModal').classList.add('hidden');
                     
                     // Reload page to show new room
                     setTimeout(() => {
@@ -258,7 +188,7 @@ function setupFormSubmissions() {
                     }, 1000);
                 } else {
                     // Show error message
-                    showAlert('error', data.message || 'Failed to create room');
+                    showAlert('error', data.message);
                     
                     // Display validation errors if any
                     if (data.errors) {
@@ -272,8 +202,6 @@ function setupFormSubmissions() {
                 console.error('Error:', error);
             });
         });
-    } else {
-        console.error('Add Room Form not found in the DOM');
     }
     
     // Edit Room Form
@@ -606,21 +534,8 @@ function confirmDeleteRoom(roomId, roomNumber) {
  * Toggle status-specific fields based on selected status
  */
 function toggleStatusFields(status, prefix = '') {
-    console.log('Toggle status fields to:', status, 'with prefix:', prefix);
-    
-    let maintenanceFieldsId = 'maintenanceFields';
-    let blockFieldsId = 'blockFields';
-    
-    // If there's a prefix, use it
-    if (prefix) {
-        maintenanceFieldsId = `${prefix}MaintenanceFields`;
-        blockFieldsId = `${prefix}BlockFields`;
-    }
-    
-    const maintenanceFields = document.getElementById(maintenanceFieldsId);
-    const blockFields = document.getElementById(blockFieldsId);
-    
-    console.log('Fields found:', { maintenanceFields, blockFields });
+    const maintenanceFields = document.getElementById(`${prefix}MaintenanceFields`);
+    const blockFields = document.getElementById(`${prefix}BlockFields`);
     
     if (maintenanceFields && blockFields) {
         if (status === 'maintenance') {
@@ -633,8 +548,6 @@ function toggleStatusFields(status, prefix = '') {
             maintenanceFields.classList.add('hidden');
             blockFields.classList.add('hidden');
         }
-    } else {
-        console.error('Could not find maintenance or block fields with IDs:', maintenanceFieldsId, blockFieldsId);
     }
 }
 
@@ -756,7 +669,7 @@ function showLoading(show) {
 // Status change event handlers
 document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to status select in add room form
-    const addStatusSelect = document.getElementById('status');
+    const addStatusSelect = document.getElementById('roomStatus');
     if (addStatusSelect) {
         addStatusSelect.addEventListener('change', function() {
             toggleStatusFields(this.value);
