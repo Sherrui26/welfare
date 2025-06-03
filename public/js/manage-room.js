@@ -162,7 +162,7 @@ function setupFormSubmissions() {
             e.preventDefault();
             
             const formData = new FormData(this);
-            const url = `${baseUrl}/room/create`;
+            const url = `${baseUrl}room/create`;
             
             // Display loading indicator
             showLoading(true);
